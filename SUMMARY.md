@@ -3,6 +3,14 @@
 * [JD](README.md)
 * [JD-ZP](jd-zp.md)
 
+## 算法与数据结构
+
+* [Untitled](suan-fa-yu-shu-ju-jie-gou/untitled.md)
+
+## 设计模式
+
+* [Untitled](she-ji-mo-shi/untitled.md)
+
 ## java基础
 
 * [Untitled](java-ji-chu/untitled.md)
@@ -54,14 +62,6 @@
 ## 网络
 
 * [Untitled](wang-luo/untitled.md)
-
-## 设计模式
-
-* [Untitled](she-ji-mo-shi/untitled.md)
-
-## 算法与数据结构
-
-* [Untitled](suan-fa-yu-shu-ju-jie-gou/untitled.md)
 
 ## 中间件-Tomcat
 
