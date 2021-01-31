@@ -5,7 +5,7 @@
 
 ## 算法与数据结构
 
-* [Untitled](suan-fa-yu-shu-ju-jie-gou/untitled.md)
+* [算法汇总](suan-fa-yu-shu-ju-jie-gou/suan-fa-hui-zong.md)
 
 ## 设计模式
 
