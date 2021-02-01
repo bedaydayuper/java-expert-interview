@@ -5,6 +5,7 @@
 
 ## 算法与数据结构
 
+* [算法也是一种体力活](suan-fa-yu-shu-ju-jie-gou/suan-fa-ye-shi-yi-zhong-ti-li-huo.md)
 * [算法汇总](suan-fa-yu-shu-ju-jie-gou/suan-fa-hui-zong.md)
 
 ## 设计模式
