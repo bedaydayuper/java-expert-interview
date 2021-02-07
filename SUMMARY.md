@@ -7,6 +7,8 @@
 
 * [算法也是一种体力活](suan-fa-yu-shu-ju-jie-gou/suan-fa-ye-shi-yi-zhong-ti-li-huo.md)
 * [数组与链表](suan-fa-yu-shu-ju-jie-gou/suan-fa-hui-zong.md)
+* [数组题目汇总](suan-fa-yu-shu-ju-jie-gou/shu-zu-ti-mu-hui-zong.md)
+* [链表题目汇总](suan-fa-yu-shu-ju-jie-gou/lian-biao-ti-mu-hui-zong.md)
 
 ## 设计模式
 
