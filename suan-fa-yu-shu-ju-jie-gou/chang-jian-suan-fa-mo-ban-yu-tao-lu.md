@@ -145,5 +145,40 @@ void BFS(tree.root) {
 
 ## 7 二分查找
 
+前提：
+
+> 1、目标函数单调性（单调递增或者递减）
+>
+> 2、存在上下界
+>
+> 3、能够通过索引访问
+
+模板：
+
+```text
+int binarySearch(int[] arr, int target) {
+    int left = 0;
+    int  right = arr.length - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (target == arr[mid]) {
+            return mid;
+        } else if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    // 没找到
+    return -1;
+}
+```
+
+## 8 动态规划
+
+
+
+
+
 
 
