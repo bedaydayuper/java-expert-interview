@@ -5,6 +5,7 @@
 
 ## 算法与数据结构
 
+* [常见算法模板与套路](suan-fa-yu-shu-ju-jie-gou/chang-jian-suan-fa-mo-ban-yu-tao-lu.md)
 * [算法也是一种体力活](suan-fa-yu-shu-ju-jie-gou/suan-fa-ye-shi-yi-zhong-ti-li-huo.md)
 * [数组与链表](suan-fa-yu-shu-ju-jie-gou/suan-fa-hui-zong.md)
 * [数组题目汇总](suan-fa-yu-shu-ju-jie-gou/shu-zu-ti-mu-hui-zong.md)
