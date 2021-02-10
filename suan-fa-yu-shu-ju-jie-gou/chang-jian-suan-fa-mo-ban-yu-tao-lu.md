@@ -109,3 +109,26 @@ void dfs(tree) {
 }
 ```
 
+## 5 广度优先算法
+
+```text
+void BFS(tree.root) {
+    Queue queue = new ArrayDeque();
+    Set visited = new HashSet();
+    queue.append(tree.root);
+    visited.add(tree.root);
+    
+    while(queue.isNotEmpty()) {
+        Node node = queue.pop();
+        visited.add(node);
+        // 处理当前节点
+        process(node);
+        Nodes[] nodes = node.children();
+        queue.push(nodes);
+    }     
+    
+    // 其他处理
+    // ...
+}
+```
+
