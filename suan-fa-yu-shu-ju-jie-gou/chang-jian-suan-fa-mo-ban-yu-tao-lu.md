@@ -176,6 +176,14 @@ int binarySearch(int[] arr, int target) {
 
 ## 8 动态规划
 
+动态规划 和 递归，或者分治 没有根本上的区别。
+
+共性：  找到重复子问题。
+
+差异性：最优子结构，中途可以淘汰次优解。
+
+![](../.gitbook/assets/image%20%284%29.png)
+
 
 
 
