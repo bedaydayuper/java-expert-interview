@@ -212,8 +212,67 @@ int binarySearch(int[] arr, int target) {
 代码:
 
 ```text
-
+public class UnionFind {
+    private int[] parent;
+    private int[] weight;
+    private int size;
+ 
+    /*
+     * 初始化, 每个元素的的大哥是自己
+     */
+    public UnionFind(int size) {
+        this.parent = new int[size];
+        this.weight = new int[size];
+        this.size = size;
+        for (int i = 0; i < size; i++) {
+            this.parent[i] = i;
+            this.weight[i] = 1;
+        }
+    }
+ 
+    /**
+     * 查找某个元素的顶头大哥 
+     */
+    public int find(int element) {
+        while (element != parent[element]) {
+            parent[element] = parent[parent[element]];
+            element = parent[element];
+        }
+        return element;
+    }
+ 
+    /*
+    * 判断两个节点是否在同一个集合中
+    */
+    public boolean isConnected(int firstElement, int secondElement) {
+        return find(firstElement) == find(secondElement);
+    }
+  
+    /**
+     * 两个节点合并
+     */
+    public void unionElements(int firstElement, int secondElement) {
+        int firstRoot = find(firstElement);
+        int secondRoot = find(secondElement);
+ 
+        //如果已经属于同一个集合了，就不用再合并了。
+        if (firstRoot == secondRoot) {
+            return;
+        }
+ 
+        if (weight[firstRoot] > weight[secondRoot]) {
+            parent[secondRoot] = firstRoot;
+            weight[firstRoot] += weight[secondRoot];
+        } else {//weight[firstRoot] <= weight[secondRoot]
+            parent[firstRoot] = secondRoot;
+            weight[secondRoot] += weight[firstRoot];
+        }
+    }
+ 
+}
 ```
+
+
 
 ## 11 四联通图
 
