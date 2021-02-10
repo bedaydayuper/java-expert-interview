@@ -54,5 +54,58 @@ public void divideConquer(problem, param...) {
 }
 ```
 
+## 3 回溯
 
+核心步骤：
+
+> 采用试错的思想，尝试分步去解决一个问题。在分步解决问题的过程中，当它通过尝试发现现有的分步答案不能得到有效的正确解答的时候，它将取消上一步甚至上几步的计算，再通过其他的可能的分步解答再次尝试寻找问题的答案。
+
+会存在如下两种情况：
+
+1. 找到一个可能存在的正确答案
+2. 在尝试了所有可能的分步方法后宣告该问题没有答案。
+
+## 4 深度优先搜索 
+
+递归写法
+
+```text
+Set visited = new HashSet();
+void dfs(Node node, Set visited) {
+    // 终止条件
+    if (visited.contain(node)) {
+        return
+    }
+    visited.add(node)
+    // 处理当前node
+    for (Node childNode: node.children()) {
+        if (!visited.contain(childNode)) {
+            dfs(childNode, visited);
+        }
+    }
+}
+
+```
+
+非递归写法
+
+```text
+void dfs(tree) {
+    if (tree.root == null) {
+        return new Node[];
+    }
+    Set visited = new HashSet();
+    Stack stack = new Stack {};
+    stack.push(tree.root);
+    
+    while (stack.size == 0) {
+        Node node = stack.pop();
+        visited.add(node);
+        // 处理当前节点
+        process(node);
+        Node[] nodes = node.children();
+        stack.push(nodes);
+    }
+}
+```
 
