@@ -38,9 +38,10 @@
 ## 中间件-es
 
 * [ES 面试题](zhong-jian-jian-es/untitled.md)
-* [ES 日常操作汇总-操作结构](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong-gou-jian.md)
-* [ES 日常操作汇总-运维](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong-yun-wei.md)
-* [ES 日常操作汇总-查询](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong-cha-xun.md)
+* [ES日常操作汇总](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong/README.md)
+  * [ES 日常操作汇总-运维](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong/es-ri-chang-cao-zuo-hui-zong-yun-wei.md)
+  * [ES 日常操作汇总-操作结构](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong/es-ri-chang-cao-zuo-hui-zong-gou-jian.md)
+  * [ES 日常操作汇总-查询](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong/es-ri-chang-cao-zuo-hui-zong-cha-xun.md)
 
 ## 中间件-kafka
 
