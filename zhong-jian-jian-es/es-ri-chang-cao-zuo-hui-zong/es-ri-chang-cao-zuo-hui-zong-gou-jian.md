@@ -268,19 +268,80 @@ GET my_index/_search
 DELETE demo_index2
 ```
 
-### 1.4 修改
+### 1.4 修改-增加字段
 
-
-
-### 1.5 dynamic mapping 规则
+> mapping一旦创建之后，就无法修改，只能追加，如果要修改，就需要删除掉整个文档进行重建。
 
 ```text
-true or false --> boolean
-123 --> long
-123.45 --> double
-2017-01-01 --> date
-"hello world" --> string/text
+创建时，只增加了properTest properTest2, 如下：
+PUT demo_index2
+{
+    "mappings": {
+      "demo_type": {
+        "properties": {
+          "properTest": {
+            "properties": {
+              "age": {
+                "type": "long"
+              },
+              "name": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
+          },
+          "properTest2": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      }
+    }
+}
+
+现在想添加
+PUT /demo_index2/demo_type/_mapping
+{
+    "properties": {
+      "properTest3": {
+        "type": "integer"
+      }
+    }
+}
+
 ```
 
+
+
+### 1.5 修改- 重新建立一个index，然后创建一个新的mapping,通过别名重定向
+
+
+
+
+
+### 1.6 dynamic mapping 规则
+
+![](../../.gitbook/assets/image%20%285%29.png)
+
+### 1.7 todo 生产环境的mappings 文件，看一下。
+
+
+
 ## 2 文档CRUD
+
+
+
+## 参考文献：
+
+mapping 的设置： [https://blog.csdn.net/ZYC88888/article/details/83059040](https://blog.csdn.net/ZYC88888/article/details/83059040)
 
