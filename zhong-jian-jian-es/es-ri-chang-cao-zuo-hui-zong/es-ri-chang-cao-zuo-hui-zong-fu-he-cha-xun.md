@@ -236,13 +236,57 @@ POST student/_search
 
 ## 2 boosting query 
 
+must\_not 直接将doc 排除掉，有时需要将包含某些字符的doc 权重降低，此时可以使用 boosting query。  
 
+
+> boosting 需要搭配 positive, negative, negative\_boost 。 只有匹配了 **positive查询** 的文档才会被包含到结果集中，但是同时匹配了**negative查询** 的文档会被降低其相关度，
+
+```text
+# 创建索引并添加数据
+POST /news/news_type/_bulk
+{ "index": { "_id": 1 }}
+{ "content":"Apple Mac" }
+{ "index": { "_id": 2 }}
+{ "content":"Apple iPad" }
+{ "index": { "_id": 3 }}
+{ "content":"Apple employee like Apple Pie and Apple Juice" }
+
+
+
+# 通过Boosting的方式，将3的记录也纳入结果集，只是排名会靠后。(结果 1->2->3)
+POST news/news_type/_search
+{
+  "query": {
+    "boosting": {
+      "positive": {
+        "match": {
+          "content": "apple"
+        }
+      },
+      "negative": {
+        "match": {
+          "content": "pie"
+        }
+      },
+      "negative_boost": 0.5
+    }
+  }
+}
+```
 
 ## 3 constant\_score （固定分数）
 
+暂时忽略，不常用。可以参考：
+
+[https://www.elastic.co/guide/cn/elasticsearch/guide/current/ignoring-tfidf.html](https://www.elastic.co/guide/cn/elasticsearch/guide/current/ignoring-tfidf.html)
+
 ## 4 dis\_max （最佳匹配查询）
 
+暂时忽略，不常用。
+
 ## 5 function\_score 函数查询
+
+暂时忽略，不常用。
 
 ## 参考文献：
 
