@@ -175,6 +175,65 @@ POST student/_search
 
 ```
 
+增加 filter:
+
+```text
+POST student/_search
+{
+  "query": {
+    "bool" : {
+      "must" : {
+        "term" : { "interests" : "演" }
+      },
+      "must_not": {
+        "range" : {
+          "age" : {"gte" : 60}
+        } 
+      },
+      "should": {
+        "term" : {"name" : "强"}
+      },
+      "filter": {
+          "range": {
+            "birthday" : {
+              "gte": "1960-06-19"
+            }
+          }
+      }
+    }
+  }
+}
+返回结果：
+{
+  "took": 4,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 0.57843524,
+    "hits": [
+      {
+        "_index": "student",
+        "_type": "student_type",
+        "_id": "2",
+        "_score": 0.57843524,
+        "_source": {
+          "name": "刘德华",
+          "address": "香港",
+          "age": 28,
+          "interests": "演戏 旅游",
+          "birthday": "1980-06-19"
+        }
+      }
+    ]
+  }
+}
+```
+
 ## 2 boosting query 
 
 
