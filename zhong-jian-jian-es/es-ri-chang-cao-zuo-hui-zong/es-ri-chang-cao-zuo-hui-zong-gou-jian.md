@@ -23,31 +23,261 @@ pri.store.size 主分片磁盘占用大小
 ```text
 PUT /student
 {
-    "settings": {
-        "number_of_shards": 3,
-        "number_of_replicas": 1
-    },
-    "mappings": {
-            "properties": {
-                "name": {
-                    "type":"text"
-                },
-                "country": {
-                    "type":"keyword"
-                },
-                "age": {
-                    "type":"integer"
-                },
-                "date": {
-                    "type": "date",
-                    "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
-            }
+  "settings": {    //  索引的settings.
+    "number_of_shards": 3, // 每个索引的主分片数，默认值是 5 . 这个配置在索引创建后不能修改。
+    "number_of_replicas": 1 // 每个主分片的副本数，默认值是 1 。对于活动的索引库，这个配置可以随时修改。
+  },
+  "mappings": {   // 索引的mappings
+    "demoType": {    // type, 在新的版本里面 type 不再使用。
+      "properties": {   // 属性
+        "name": {
+          "type": "text", // 类型
+          "index": analyzed, // 索引类型
+          "analyzer": "english", // 分词类型， 插入文档时，将text类型的字段做分词然后插入倒排索引
+          "search_analyzer": "english"  // 搜索时的分词类型，在查询时，先对要查询的text类型的输入做分词，再去倒排索引搜索
+        },
+        "country": {
+          "type": "keyword"
+        },
+        "age": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
         }
+      }
     }
+  }
 }
 
 解析：
 
+1、index: 
+analyzed : 全文 full text
+not_analyzed : 精准匹配 exact value
+no ：不索引
+
+2、analyzer vs search_analyzer
+在索引时，只会去看字段有没有定义 analyzer，有定义的话就用定义的，没定义就用ES预设的
+
+在查询时，会先去看字段有没有定义search_analyzer，如果没有定义，就去看有没有analyzer，再没有定义，才会去使用ES预设的
+
+3、type  （参考自： https://blog.csdn.net/ZYC88888/article/details/83059040）
+（1）text: 设置text类型以后，字段内容会被分析，在生成倒排索引以前，字符串会被分析器分成一个一个词项。text类型的字段不用于排序，很少用于聚合（termsAggregation除外）。
+（2）keyword: 只能精确匹配到。
+（3）数字类型：在满足需求的情况下，尽可能选择范围小的数据类型
+（4）Object类型：
+PUT my_index/my_type/1
+{ 
+  "region": "US",
+  "manager": { 
+    "age":     30,
+    "name": { 
+      "first": "John",
+      "last":  "Smith"
+    }
+  }
+} 
+
+会被索引成 kv 对：
+{
+  "region":             "US",
+  "manager.age":        30,
+  "manager.name.first": "John",
+  "manager.name.last":  "Smith"
+}
+对应的mappings:
+
+{
+  "mappings": {
+    "my_type": { 
+      "properties": {
+        "region": {
+          "type": "keyword"
+        },
+        "manager": { 
+          "properties": {
+            "age":  { "type": "integer" },
+            "name": { 
+              "properties": {
+                "first": { "type": "text" },
+                "last":  { "type": "text" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+（5）date类型
+可以指定 date 的格式
+
+(6) Array类型
+默认情况下任何字段都可以包含一个或者多个值，但是一个数组中的值要是同一种类型
+例如：
+字符数组: [ “one”, “two” ]
+整型数组：[1,3]
+嵌套数组：[1,[2,3]],等价于[1,2,3]
+对象数组：[ { “name”: “Mary”, “age”: 12 }, { “name”: “John”, “age”: 10 }]
+
+
+例如：
+PUT /demo_index2/demo_type/1
+{
+  "properTest": [
+    {
+      "name": "zhangsan",
+      "age": 1
+    },
+    {
+      "name": "lisi",
+      "age": 2
+    }
+  ],
+  "properTest2" : "hhhhh"
+}
+
+其对应的mapping 如下：
+{
+  "demo_index2": {
+    "mappings": {
+      "demo_type": {
+        "properties": {
+          "properTest": {
+            "properties": {
+              "age": {
+                "type": "long"
+              },
+              "name": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
+          },
+          "properTest2": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+(7) binary类型
+接受base64编码的字符串，默认不存储也不可搜索。
+(8) ip类型
+该类型字段用于存储IPV4或者IPV6的地址。
+
+（9）nested类型
+特殊类型的object。普通的object 会将数据打平，这样其不同字段之间的关系也就丢失了，nested 可以使这种关系保留。
+例如：
+
+PUT my_index/my_type/1
+{
+  "group" : "fans",
+  "user" : [ 
+    {
+      "first" : "John",
+      "last" :  "Smith"
+    },
+    {
+      "first" : "Alice",
+      "last" :  "White"
+    }
+  ]
+
+会进行打平：
+{
+  "group" :        "fans",
+  "user.first" : [ "alice", "john" ],
+  "user.last" :  [ "smith", "white" ]
+}
+
+user.first和user.last会被平铺为多值字段，Alice和White之间的关联关系会消失。上面的文档会不正确的匹配以下查询(虽然能搜索到,实际上不存在Alice Smith)：
+
+
+使用nested字段类型解决Object类型的不足：
+
+PUT my_index
+{
+  "mappings": {
+    "my_type": {
+      "properties": {
+        "user": {
+          "type": "nested" 
+        }
+      }
+    }
+  }
+}
+ 
+PUT my_index/my_type/1
+{
+  "group" : "fans",
+  "user" : [
+    {
+      "first" : "John",
+      "last" :  "Smith"
+    },
+    {
+      "first" : "Alice",
+      "last" :  "White"
+    }
+  ]
+}
+ 
+GET my_index/_search
+{
+  "query": {
+    "nested": {
+      "path": "user",
+      "query": {
+        "bool": {
+          "must": [
+            { "match": { "user.first": "Alice" }},
+            { "match": { "user.last":  "Smith" }} 
+          ]
+        }
+      }
+    }
+  }
+}
+ 
+```
+
+
+
+### 1.3 删除
+
+
+
+### 1.4 修改
+
+
+
+### 1.5 dynamic mapping 规则
+
+```text
+true or false --> boolean
+123 --> long
+123.45 --> double
+2017-01-01 --> date
+"hello world" --> string/text
 ```
 
 ## 2 文档CRUD
