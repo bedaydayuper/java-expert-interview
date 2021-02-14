@@ -262,7 +262,7 @@ GET student/_search
 }
 ```
 
-### 1.3 控制数量与返回字段
+### 1.3 控制数量与返回字段， 以及排序规则
 
 ```text
 如果不控制，如下请求会返回3条：
@@ -330,7 +330,7 @@ GET student/_search
 }
 ```
 
-增加from size 与 source 
+增加from size 、 source 与 sort 
 
 ```text
 GET student/_search
@@ -340,9 +340,17 @@ GET student/_search
   "query":{
     "match":{"interests": "演戏"}
   },
-  "_source": ["name", "age"]
+  "_source": ["name", "age"],
+  "sort": [
+    {
+      "age": {
+        "order": "desc"
+      }
+    }
+  ]
   
 }
+
 返回结果：
 {
   "took": 1,
@@ -354,30 +362,82 @@ GET student/_search
   },
   "hits": {
     "total": 3,
-    "max_score": 1.1568705,
+    "max_score": null,
     "hits": [
       {
         "_index": "student",
         "_type": "student_type",
-        "_id": "2",
-        "_score": 1.1568705,
+        "_id": "4",
+        "_score": null,
         "_source": {
-          "name": "刘德华",
-          "age": 28
-        }
+          "name": "王小宝",
+          "age": 63
+        },
+        "sort": [
+          63
+        ]
       },
       {
         "_index": "student",
         "_type": "student_type",
         "_id": "5",
-        "_score": 1.1568705,
+        "_score": null,
         "_source": {
           "name": "向华强",
           "age": 31
-        }
+        },
+        "sort": [
+          31
+        ]
       }
     ]
   }
+}
+```
+
+### 1.4 范围查询
+
+> range 实现范围查询
+>
+> include\_lower: 是否包含范围的左边界  默认是true
+>
+> include\_upper: 是否包含范围的右边界  默认是true
+
+```text
+GET student/_search
+{
+    "query": {
+        "range": {
+            "age": {
+                "from": 18,
+                "to": 28,
+                "include_lower": true,
+                "include_upper": true
+            }
+        }
+    }
+}
+
+
+```
+
+### 1.5 wildcard 查询
+
+> 使用通配符\* 和 ? 进行查询
+>
+> ·\*· 代表 0个 或者多个字符
+>
+> ? 代表 任意一个字符
+
+```text
+## 查询 徐 开头的文档
+GET student/_search
+{
+    "query": {
+        "wildcard": {
+             "name": "徐*"
+        }
+    }
 }
 ```
 
