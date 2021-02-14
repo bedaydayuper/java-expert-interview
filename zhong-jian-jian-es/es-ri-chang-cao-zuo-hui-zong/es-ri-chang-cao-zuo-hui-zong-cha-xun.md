@@ -445,6 +445,28 @@ GET student/_search
 
 ## 2 Filter 查询 
 
+> filter 是不计算相关性的。
+
+```text
+## 过滤年龄为3岁的文档
+GET student/_search
+{
+  "post_filter": {
+    "term": {
+      "age": "3"
+    }
+  }
+}
+
+#2、查询年纪为3或者63的 （命中 ID = 1,4)
+GET student/_search
+{ 
+  "post_filter":{
+    "terms":{"age":[3,63]}
+  }
+}
+```
+
 ## 参考文献：
 
 [https://www.cnblogs.com/qdhxhz/p/11493677.html](https://www.cnblogs.com/qdhxhz/p/11493677.html)
