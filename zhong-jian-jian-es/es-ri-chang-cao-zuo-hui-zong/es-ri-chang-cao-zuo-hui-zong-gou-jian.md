@@ -325,7 +325,52 @@ PUT /demo_index2/demo_type/_mapping
 
 ### 1.5 修改- 重新建立一个index，然后创建一个新的mapping,通过别名重定向
 
+```text
+step1、创建一个索引，这个索引的名称最好带上版本号，比如my_index_v1,my_index_v2等。
 
+step2、创建一个指向本索引的同义词。
+
+Java代码  
+curl -XPOST localhost:9200/_aliases -d '  
+{  
+    "actions": [  
+        { "add": {  
+            "alias": "my_index",  
+            "index": "my_index_v1"  
+        }}  
+    ]  
+}  
+'  
+ 
+
+ 此时，你可以通过同义词my_index访问。包括创建索引，删除索引等。
+
+ 
+
+step3，需求来了，需要更改mapping了，此时，你需要创建一个新的索引，比如名称叫my_index_v2（版本升级）.，在这个索引里面创建你新的mapping结构。然后，将新的数据刷入新的index里面。在刷数据的过程中，你可能想到直接从老的index中取出数据，然后更改一下格式即可。如何遍历所有的老的index数据，请参考这里。
+
+step4，修改同义词。将指向v1的同义词，修改为指向v2。http接口如下：
+
+Java代码  
+curl -XPOST localhost:9200/_aliases -d '  
+{  
+    "actions": [  
+        { "remove": {  
+            "alias": "my_index",  
+            "index": "my_index_v1"  
+        }},  
+        { "add": {  
+            "alias": "my_index",  
+            "index": "my_index_v2"  
+        }}  
+    ]  
+}  
+'  
+ step5，删除老的索引。
+
+Java代码  
+curl -XDELETE localhost:9200/my_index_v1  
+```
 
 
 
