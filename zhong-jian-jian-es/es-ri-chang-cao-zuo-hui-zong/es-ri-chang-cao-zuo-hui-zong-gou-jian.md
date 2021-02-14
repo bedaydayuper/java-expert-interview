@@ -382,7 +382,108 @@ curl -XDELETE localhost:9200/my_index_v1
 
 ## 2 文档CRUD
 
+### 2.1 创建
 
+#### 2.1.1 有id 的创建 \(put\)
+
+```text
+## 有id 的创建
+PUT /demo_index2/demo_type/1
+{
+  "properTest": [
+    {
+      "name": "zhangsan",
+      "age": 1
+    },
+    {
+      "name": "lisi",
+      "age": 2
+    }
+  ],
+  "properTest2" : "hhhhh"
+}
+
+## 没有id 的创建
+
+```
+
+#### 2.1.2 没有id 的创建 \(post\)
+
+```text
+POST /demo_index2/demo_type/
+{
+  "properTest": [
+    {
+      "name": "zhangsan",
+      "age": 1
+    },
+    {
+      "name": "lisi",
+      "age": 2
+    }
+  ],
+  "properTest2" : "hhhhh"
+}
+
+```
+
+### 2.2 查看
+
+```text
+GET demo_index2/demo_type/_search     // 全部
+
+GET demo_index2/demo_type/1   // 根据id 查询
+```
+
+### 2.3 更新
+
+#### 2.3.1 全量覆盖 【检索并修改它，然后重新索引整个文档】
+
+```text
+PUT /demo_index2/demo_type/1
+{
+  "properTest": [
+    {
+      "name": "zhangsan",
+      "age": 11
+    },
+    {
+      "name": "lisi",
+      "age": 22222
+    }
+  ],
+  "properTest2" : "hhhhhaaaa"
+}
+```
+
+#### 2.3.2 只覆盖修改的字段
+
+> `update` API 必须遵循同样的规则。 从外部来看，我们在一个文档的某个位置进行部分更新。然而在内部， `update` API 简单使用与之前描述相同的 _检索-修改-重建索引_ 的处理过程。 区别在于这个过程发生在分片内部，这样就避免了多次请求的网络开销。
+
+```text
+POST demo_index2/demo_type/1/_update
+{
+  "doc": {
+    "properTest2": "hhhhhaaaa22222",
+    "properTest": [
+      {
+        "name": "zhangsan222",
+        "age": 11
+      },
+      {
+        "name": "lisi222",
+        "age": 22222
+      }
+    ]
+  }
+} 
+```
+
+### 2.4 删除
+
+```text
+DELETE /{index}/{type}/{id}
+```
 
 ## 参考文献：
 
