@@ -101,13 +101,75 @@ docs.deleted 删除文档数量
 store.size 存储占用大小
 ```
 
-### 
+如果要查看某个索引的信息，可以使用如下指令：
 
-### 
+```text
+GET _cat/indices/{index}
+```
 
-### 
+### 1.6 查看分片信息
 
-### 参考文献：
+```text
+GET /_cat/segments?v&pretty
+
+结果举例：
+index      shard prirep ip        segment generation docs.count docs.deleted    size size.memory committed searchable version compound
+bank       0     p      127.0.0.1 _0               0        197            0 126.2kb       10511 true      true       6.5.0   true
+bank       1     p      127.0.0.1 _0               0        191            0 122.6kb       10296 true      true       6.5.0   true
+bank       2     p      127.0.0.1 _0               0        211            0 134.1kb       10818 true      true       6.5.0   true
+bank       3     p      127.0.0.1 _0               0        200            0 127.9kb       10542 true      true       6.5.0   true
+bank       4     p      127.0.0.1 _0               0        201            0 128.5kb       10590 true      true       6.5.0   true
+
+
+结果分析：
+http://doc.codingdict.com/elasticsearch/222/
+size 磁盘大小
+size.memory  相关内容占用内存的大小
+committed  是否已经落到磁盘上了。
+compound   底层Lucene 是否已经将多个文件合并为一个文件
+```
+
+### 1.7 查看文档数量
+
+```text
+GET /_cat/count?v&pretty 
+
+结果举例：
+epoch      timestamp count
+1613272429 11:13:49  1010
+
+结果分析：
+```
+
+### 1.8 集群内不同类型线程池的统计信息
+
+```text
+GET /_cat/thread_pool?v&pretty 
+结果举例：
+node_name name                active queue rejected
+es-node1  bulk                     0     0        0
+es-node1  fetch_shard_started      0     0        0
+es-node1  fetch_shard_store        0     0        0
+es-node1  flush                    0     0        0
+es-node1  force_merge              0     0        0
+es-node1  generic                  0     0        0
+es-node1  get                      0     0        0
+es-node1  index                    0     0        0
+es-node1  listener                 0     0        0
+es-node1  management               1     0        0
+es-node1  refresh                  0     0        0
+es-node1  search                   0     0        0
+es-node1  snapshot                 0     0        0
+es-node1  warmer                   0     0        0
+
+结果分析：
+node_name 节点名
+name  线程池名称
+active（活跃的），queue（队列中的）和 reject（拒绝的）的统计信息
+
+```
+
+## 参考文献：
 
 ### [https://www.cnblogs.com/qdhxhz/p/11461174.html](https://www.cnblogs.com/qdhxhz/p/11461174.html)  
 
