@@ -264,7 +264,9 @@ GET my_index/_search
 
 ### 1.3 删除
 
-
+```text
+DELETE demo_index2
+```
 
 ### 1.4 修改
 
