@@ -378,8 +378,6 @@ curl -XDELETE localhost:9200/my_index_v1
 
 ![](../../.gitbook/assets/image%20%285%29.png)
 
-### 1.7 todo 生产环境的mappings 文件，看一下。
-
 
 
 ## 2 文档CRUD
