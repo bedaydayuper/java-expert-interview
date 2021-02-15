@@ -1,4 +1,4 @@
-# ES 日常操作汇总-聚合查询
+# ES 日常操作汇总-Metrics聚合
 
 ## 0 引入
 
@@ -38,7 +38,7 @@
 > 多值：  
 > stats, extended\_\__stats, percentile, percentile\_rank , top hits_
 
-### 1.1 准备数据
+## 2 准备数据
 
 ```text
 ## 创建索引mapping
@@ -100,7 +100,7 @@ PUT /employees/employees_type/_bulk
 
 ```
 
-### 1.2  最小值 / 最大值/ 平均值/ 总和 
+## 3 最小值 / 最大值/ 平均值/ 总和 
 
 ```text
 # 最小值
@@ -191,7 +191,7 @@ POST employees/employees_type/_search
 
 ```
 
-### 1.3 stats 统计，请求后会直接显示多种聚合结果
+## 4 stats 统计，请求后会直接显示多种聚合结果
 
 ```text
 POST employees/employees_type/_search
@@ -354,7 +354,7 @@ POST employees/employees_type/_search
 }
 ```
 
-### 1.4 percentiles
+## 5 percentiles
 
 > 对指定字段的值按从小到大累计每个值对应的文档数的占比，返回指定占比比例对应的值。
 
@@ -493,9 +493,7 @@ POST employees/employees_type/_search?filter_path=hits.hits._source,hits.total,a
 
 ```
 
-
-
-### 1.5 Percentile Ranks 通过文档值 求百分比
+## 6 Percentile Ranks 通过文档值 求百分比
 
 ```text
 POST employees/employees_type/_search?filter_path=hits.hits._source,hits.total,aggregations
@@ -591,7 +589,7 @@ POST employees/employees_type/_search?filter_path=hits.hits._source,hits.total,a
 }
 ```
 
-### 1.6 Top Hits 分桶后获取该桶内前n 的文档列表
+## 7 Top Hits 分桶后获取该桶内前n 的文档列表
 
 ```text
 ## 根据工作类型分桶，然后按照性别分桶，计算每个桶中工资的top2的薪资。
@@ -925,5 +923,5 @@ POST employees/employees_type/_search?filter_path=hits.hits._source,hits.total,a
 
 
 
-## 2   Bucket 聚合
+
 
