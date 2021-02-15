@@ -376,7 +376,7 @@ curl -XDELETE localhost:9200/my_index_v1
 
 ### 1.6 dynamic mapping 规则
 
-![](../../.gitbook/assets/image%20%285%29.png)
+![](../../.gitbook/assets/image%20%287%29.png)
 
 
 

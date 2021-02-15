@@ -43,6 +43,7 @@
   * [ES 日常操作汇总-文档与索引的CRUD](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong/es-ri-chang-cao-zuo-hui-zong-gou-jian.md)
   * [ES 日常操作汇总-Query查询和Filter查询](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong/es-ri-chang-cao-zuo-hui-zong-cha-xun.md)
   * [ES 日常操作汇总-复合查询](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong/es-ri-chang-cao-zuo-hui-zong-fu-he-cha-xun.md)
+  * [ES 日常操作汇总-聚合查询](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong/es-ri-chang-cao-zuo-hui-zong-ju-he-cha-xun.md)
 
 ## 中间件-kafka
 
