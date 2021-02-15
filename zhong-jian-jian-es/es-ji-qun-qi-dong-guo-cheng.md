@@ -2,7 +2,7 @@
 
 ## 1 启动流程
 
-![&#x542F;&#x52A8;&#x6D41;&#x7A0B;](../.gitbook/assets/image%20%2817%29.png)
+![&#x542F;&#x52A8;&#x6D41;&#x7A0B;](../.gitbook/assets/image%20%2818%29.png)
 
 ## 2 确定主节点
 
@@ -14,13 +14,13 @@
 * 得票人数过半
 * 当节点离开时，必须判断当前节点数是否过半。 
 * 
-![&#x9009;&#x4E3B;&#x5168;&#x6D41;&#x7A0B;](../.gitbook/assets/image%20%2812%29.png)
+![&#x9009;&#x4E3B;&#x5168;&#x6D41;&#x7A0B;](../.gitbook/assets/image%20%2813%29.png)
 
-![&#x9009;&#x4E3E;&#x4E34;&#x65F6;master &#x6D41;&#x7A0B;](../.gitbook/assets/image%20%2821%29.png)
+![&#x9009;&#x4E3E;&#x4E34;&#x65F6;master &#x6D41;&#x7A0B;](../.gitbook/assets/image%20%2823%29.png)
 
-![&#x786E;&#x7ACB;master](../.gitbook/assets/image%20%2814%29.png)
+![&#x786E;&#x7ACB;master](../.gitbook/assets/image%20%2815%29.png)
 
-![&#x5B9A;&#x671F;&#x68C0;&#x6D4B;](../.gitbook/assets/image%20%2815%29.png)
+![&#x5B9A;&#x671F;&#x68C0;&#x6D4B;](../.gitbook/assets/image%20%2816%29.png)
 
 ## 3 选举元信息
 
@@ -49,5 +49,5 @@
 
 划分了两个阶段：
 
-![](../.gitbook/assets/image%20%2813%29.png)
+![](../.gitbook/assets/image%20%2814%29.png)
 
