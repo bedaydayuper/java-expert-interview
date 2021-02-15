@@ -27,7 +27,7 @@
 }
 ```
 
-## 1 metric
+## 1 metric 聚合
 
 > metric 聚合分析分为 单值分析和多值分析 两类。
 >
@@ -925,5 +925,5 @@ POST employees/employees_type/_search?filter_path=hits.hits._source,hits.total,a
 
 
 
-## 2   
+## 2   Bucket 聚合
 
