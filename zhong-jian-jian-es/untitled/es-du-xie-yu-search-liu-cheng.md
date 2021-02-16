@@ -32,7 +32,7 @@ search 过程：
 
 ## 4 单台机器上的写操作底层原理
 
-![&#x5199;&#x64CD;&#x4F5C;&#x5E95;&#x5C42;&#x539F;&#x7406;](../../.gitbook/assets/image%20%2821%29.png)
+![&#x5199;&#x64CD;&#x4F5C;&#x5E95;&#x5C42;&#x539F;&#x7406;](../../.gitbook/assets/image%20%2822%29.png)
 
 > 数据先写入内存buffer（此时并不能检索到），然后每隔1s 将数据refresh 到os cache, 到了os cache 数据就能检索到了，所以我们说es 从写入到被检索到，中间有1s 的延迟。每隔5s ，将数据写入到translog文件（如果机器宕机，内存数据全丢失，最多有5s 的数据丢失），translog 大到一定程度，或者默认每隔30min ，会触发commit，将缓冲区的数据 都flush 到 setment file 磁盘文件中。数据写入到segment file 之后，同时就建好了倒排索引。
 
