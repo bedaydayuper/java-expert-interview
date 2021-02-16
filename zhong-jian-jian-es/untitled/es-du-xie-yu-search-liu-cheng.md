@@ -38,7 +38,21 @@ search 过程：
 
 注意： translog 记录会每次执行写操作理解写入os cache, 然后 5s 写入一次磁盘，因为如果每次translog 记录 都直接写入磁盘，性能会非常差。
 
+### 4.2 refresh和flush有什么区别
 
+refresh 是从buffer 刷新到oscache
+
+而 flush 是从os cache 刷新到磁盘。
+
+### 4.3 translog日志有什么作用
+
+记录每次的写操作，用于恢复数据。
+
+### 4.4 translog文件和segment文件有什么区别
+
+translog 是记录操作
+
+segment 是doc 本身，记录了内容。
 
 ## 5 删除/ 更新数据底层原理
 
@@ -54,7 +68,9 @@ search 过程：
 
 > buffer 每 refresh 一次，就会产生一个 `segment file` ，所以默认情况下是 1 秒钟一个 `segment file` ，这样下来 `segment file` 会越来越多，此时会定期执行 merge。每次 merge 的时候，会将多个 `segment file` 合并成一个，同时这里会将标识为 `deleted` 的 doc 给**物理删除掉**，然后将新的 `segment file` 写入磁盘，这里会写一个 `commit point` ，标识所有新的 `segment file` ，然后打开 `segment file` 供搜索使用，同时删除旧的 `segment file` 。
 
+### 5.4 索引生命周期
 
+索引是在写入时创建，创建之后不可变。在更新或者删除时，被标记为 deleted 状态，在segment merge 时，进行物理删除。
 
 ## 参考
 
