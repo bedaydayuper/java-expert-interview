@@ -6,38 +6,46 @@
 
 ## 0 es 文件分布
 
-## 
 
-## 1 **详细描述一下Elasticsearch搜索的过程**
-
-\*\*\*\*
-
-## **2**  **详细描述一下Elasticsearch更新和删除文档的过程**
-
-  
-****
-
-## **3 详细描述一下Elasticsearch索引文档的过程**
-
-\*\*\*\*
-
-\*\*\*\*
-
-## **4   Elasticsearch是如何实现Master选举的**
-
-## 
 
 ## 5  **在并发情况下，Elasticsearch如果保证读写一致？**
 
-\*\*\*\*
+[https://www.jianshu.com/p/61dd9fb7d785](https://www.jianshu.com/p/61dd9fb7d785)    
+通过版本号 使用乐观锁 保证数据的一致性。
 
-\*\*\*\*
+另外对于写操作：
+
+> 写操作一致性级别支持 quorum/one/all, 默认为quorum, 即只有当大多数分片可用时才允许写操作。
+
+对于读操作:
+
+> 可以设置replication 为sync （默认），这使得操作在主分片和副本分片都完成才会返回；如果设置为async 时，也可以通过设置搜索请求参数\_preference 为 primary 来查询主分片，确保文档是最新的。
+
+
 
 ## 6 **Elasticsearch对于大数据量（上亿量级）的聚合如何实现？**
 
 \*\*\*\*
 
+{% embed url="https://xiaozhazi.github.io/2020/08/10/ES-tech\_md/\#ES%E5%AF%B9%E4%BA%8E%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%87%8F-%E4%B8%8A%E4%BA%BF%E9%87%8F%E7%BA%A7-%E7%9A%84%E8%81%9A%E5%90%88%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0" %}
+
+> ES目前支持两种近似算法\(cardinality和percentiles\),以牺牲一点小小的估算错误为代价换回高速的执行效率和极小的内存消耗.
+
+
+
+\*\*\*\*
+
 ## **7 对于GC方面，在使用Elasticsearch时要注意什么？**
+
+> 1）倒排词典的索引需要常驻内存，无法GC，需要监控data node上segment memory增长趋势。
+>
+>  2）各类缓存，field cache, filter cache, indexing cache, bulk queue等等，要设置合理的大小，并且要应该根据最坏的情况来看heap是否够用，也就是各类缓存全部占满的时候，还有heap空间可以分配给其他任务吗？避免采用clear cache等“自欺欺人”的方式来释放内存。 
+>
+> 3）避免返回大量结果集的搜索与聚合。确实需要大量拉取数据的场景，可以采用scan & scroll api来实现。 
+>
+> 4）cluster stats驻留内存并无法水平扩展，超大规模集群可以考虑分拆成多个集群通过tribe node连接。 
+>
+> 5）想知道heap够不够，必须结合实际应用场景，并对集群的heap使用情况做持续的监控
 
 ## 
 
