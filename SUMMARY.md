@@ -38,7 +38,7 @@
 ## 中间件-es
 
 * [ES 面试题](zhong-jian-jian-es/untitled/README.md)
-  * [ES 读写与search 流程](zhong-jian-jian-es/untitled/es-du-xie-yu-search-liu-cheng.md)
+  * [ES 读写与search 流程, 以及底层原理](zhong-jian-jian-es/untitled/es-du-xie-yu-search-liu-cheng.md)
   * [ES 数据模型](zhong-jian-jian-es/untitled/es-shu-ju-mo-xing.md)
 * [ES 集群启动过程](zhong-jian-jian-es/es-ji-qun-qi-dong-guo-cheng.md)
 * [ES 单个节点的启动与关闭](zhong-jian-jian-es/es-dan-ge-jie-dian-de-qi-dong-yu-guan-bi.md)

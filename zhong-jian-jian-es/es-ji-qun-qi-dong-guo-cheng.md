@@ -2,7 +2,7 @@
 
 ## 1 启动流程
 
-![&#x542F;&#x52A8;&#x6D41;&#x7A0B;](../.gitbook/assets/image%20%2824%29.png)
+![&#x542F;&#x52A8;&#x6D41;&#x7A0B;](../.gitbook/assets/image%20%2825%29.png)
 
 ## 2 确定主节点
 
@@ -16,11 +16,11 @@
 * 
 ![&#x9009;&#x4E3B;&#x5168;&#x6D41;&#x7A0B;](../.gitbook/assets/image%20%2817%29.png)
 
-![&#x9009;&#x4E3E;&#x4E34;&#x65F6;master &#x6D41;&#x7A0B;](../.gitbook/assets/image%20%2829%29.png)
+![&#x9009;&#x4E3E;&#x4E34;&#x65F6;master &#x6D41;&#x7A0B;](../.gitbook/assets/image%20%2830%29.png)
 
 ![&#x786E;&#x7ACB;master](../.gitbook/assets/image%20%2820%29.png)
 
-![&#x5B9A;&#x671F;&#x68C0;&#x6D4B;](../.gitbook/assets/image%20%2821%29.png)
+![&#x5B9A;&#x671F;&#x68C0;&#x6D4B;](../.gitbook/assets/image%20%2822%29.png)
 
 ## 3 选举元信息
 
