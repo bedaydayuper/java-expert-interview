@@ -8,7 +8,7 @@
 
 ### 2.1 基本写入模型
 
-![](../../.gitbook/assets/image%20%2824%29.png)
+![](../../.gitbook/assets/image%20%2825%29.png)
 
 ### 2.2 基本读取模型
 
