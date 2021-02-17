@@ -24,6 +24,8 @@
 1. 当集群 master 候选数量不小于 3 个时，可以通过设置最少投票通过数量（discovery.zen.minimum\_master\_nodes）超过所有候选节点一半以上来解决脑裂问题；
 2. 当候选数量为两个时，只能修改为唯一的一个 master 候选，其他作为 data 节点，避免脑裂问题。
 
+> 一般生产环境，都要求至少3个节点。
+
 ## 参考文献：
 
 [https://www.wenyuanblog.com/blogs/elasticsearch-interview-questions.html](https://www.wenyuanblog.com/blogs/elasticsearch-interview-questions.html)
