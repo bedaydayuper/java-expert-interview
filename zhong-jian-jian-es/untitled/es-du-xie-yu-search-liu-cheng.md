@@ -34,9 +34,28 @@ search 过程：
 
 ![&#x5199;&#x64CD;&#x4F5C;&#x5E95;&#x5C42;&#x539F;&#x7406;](../../.gitbook/assets/image%20%2822%29.png)
 
-> 数据先写入内存buffer（此时并不能检索到），然后每隔1s 将数据refresh 到os cache, 到了os cache 数据就能检索到了，所以我们说es 从写入到被检索到，中间有1s 的延迟。每隔5s ，将数据写入到translog文件（如果机器宕机，内存数据全丢失，最多有5s 的数据丢失），translog 大到一定程度，或者默认每隔30min ，会触发commit，将缓冲区的数据 都flush 到 setment file 磁盘文件中。数据写入到segment file 之后，同时就建好了倒排索引。
+![](../../.gitbook/assets/image%20%2833%29.png)
 
-注意： translog 记录会每次执行写操作理解写入os cache, 然后 5s 写入一次磁盘，因为如果每次translog 记录 都直接写入磁盘，性能会非常差。
+> 1. 先写入buffer，在buffer里的时候数据是搜索不到的；同时将数据写入translog日志文件
+> 2. 如果buffer快满了，或者每隔一秒钟，就会将buffer数据refresh到一个新的segment file中并清空buffer，但是此时数据不是直接进入segment file的磁盘文件的，而是先进入os cache的。当数据进入os cache后，就代表该数据可以被检索到了。因此说es是准实时的，这个过程就是**refresh**。
+> 3. 只要数据进入os cache，此时就可以让这个segment file的数据对外提供搜索了
+> 4. 重复1~3步骤，新的数据不断进入buffer和translog，不断将buffer数据写入一个又一个新的segment file中去，每次refresh完buffer清空，translog保留。随着这个过程推进，translog会变得越来越大。当translog达到一定长度的时候，就会触发commit操作。  
+>
+>
+>    **commit**操作（也叫**flush**操作，默认每隔30分钟执行一次）：执行refresh操作 -&gt; 写commit point -&gt; 将os cache数据fsync强刷到磁盘上去 -&gt; 清空translog日志文件
+>
+>    commit操作保证了在机器宕机时，buffer和os cache中未同步到segment file中的数据还可以在重启之后恢复到内存buffer和os cache中去，
+>
+> 5. translog其实也是先写入os cache的，默认每隔5秒刷一次到磁盘中去，所以默认情况下，可能有5秒的数据会仅仅停留在buffer或者translog文件的os cache中，如果此时机器挂了，会丢失5秒钟的数据。但是这样性能比较好，最多丢5秒的数据。也可以将translog设置成每次写操作必须是直接fsync到磁盘，但是性能会差很多。
+> 6. 如果是删除操作，commit的时候会生成一个.del文件，里面将某个doc标识为deleted状态，那么搜索的时候根据.del文件就知道这个doc被删除了
+> 7. 如果是更新操作，就是将原来的doc标识为deleted状态，然后新写入一条数据
+> 8. buffer每次refresh一次，就会产生一个segment file，所以默认情况下是1秒钟一个segment file，segment file会越来越多，此时会定期执行merge,当segment多到一定的程度时，自动触发merge操作
+> 9. 每次**merge**的时候，会将多个segment file合并成一个，同时这里会将标识为deleted的doc给物理删除掉，然后将新的segment file写入磁盘，这里会写一个commit point，标识所有新的segment file，然后打开segment file供搜索使用，同时删除旧的segment file。
+>
+>   
+>   
+>   
+> 注意： translog 记录会每次执行写操作理解写入os cache, 然后 5s 写入一次磁盘，因为如果每次translog 记录 都直接写入磁盘，性能会非常差。
 
 ### 4.2 refresh和flush有什么区别
 
