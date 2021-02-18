@@ -9,7 +9,7 @@
 
 ## 2 get 过程
 
-![GET &#x8BF7;&#x6C42;](../../.gitbook/assets/image%20%2819%29.png)
+![GET &#x8BF7;&#x6C42;](../../.gitbook/assets/image%20%2820%29.png)
 
 get 请求的过程：
 
@@ -32,9 +32,9 @@ search 过程：
 
 ## 4 单台机器上的写操作底层原理
 
-![&#x5199;&#x64CD;&#x4F5C;&#x5E95;&#x5C42;&#x539F;&#x7406;](../../.gitbook/assets/image%20%2822%29.png)
+![&#x5199;&#x64CD;&#x4F5C;&#x5E95;&#x5C42;&#x539F;&#x7406;](../../.gitbook/assets/image%20%2823%29.png)
 
-![](../../.gitbook/assets/image%20%2833%29.png)
+![](../../.gitbook/assets/image%20%2834%29.png)
 
 > 1. 先写入buffer，在buffer里的时候数据是搜索不到的；同时将数据写入translog日志文件
 > 2. 如果buffer快满了，或者每隔一秒钟，就会将buffer数据refresh到一个新的segment file中并清空buffer，但是此时数据不是直接进入segment file的磁盘文件的，而是先进入os cache的。当数据进入os cache后，就代表该数据可以被检索到了。因此说es是准实时的，这个过程就是**refresh**。

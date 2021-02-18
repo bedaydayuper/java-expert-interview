@@ -8,6 +8,15 @@
 
 kafka 保证的是分区有序而不是主题有序。
 
+2、leader 副本 负责读与写，而replica 副本 值负责与leader 副本的消息同步。replica 是用于容灾。  
+
+
+3、
+
+![](../.gitbook/assets/image%20%2819%29.png)
+
+
+
 
 
 ## 2 生产者
