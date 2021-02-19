@@ -34,6 +34,8 @@ ES 的搜索引擎严重依赖于底层的 Filesystem Cache，你如果给 Files
 
 > #### **千万不要深分页。可以采用scroll\(scroll 方案中，如果不需要排序，则考虑增加** ，将 search\_type 设置成 Scan,  Scroll-Scan 关闭了 Scroll 中最耗时的文本相似度计算和排序，使得性能更加高效。 **\)。或者search after 方案**
 
+注意：Elasticsearch 2.1.0 版本之后移除了 search\_type=scan，使用 "sort": \[ "\_doc"\] 进行代替。
+
 ## 参考文献：
 
 [https://juejin.cn/post/6844903855746973703](https://juejin.cn/post/6844903855746973703)  
