@@ -21,6 +21,42 @@ kafka 保证的是分区有序而不是主题有序。
 
 ## 2 生产者
 
+1、消息对象的结构
+
+```text
+public class ProducerRecord<K, V> {
+    private final String topic; // 主题
+    private final integer partition; // 分区号
+    private final Headers headers; // 消息头部
+    private final K key; // 键
+    private final V value; // 值
+    private final Long timestamp; // 消息时间戳
+    // 省略其他成员方法和构造方法
+}
+```
+
+key: 可以用来指定消息的键，不进是消息的附加信息，还可以用来计算分区号，进而可以让消息发往特定的分区。同一个key 的消息会被划分到同一个分区中。
+
+
+
+2、构建生产者
+
+
+
+3、消息体构建 ProducerRecord
+
+
+
+4、发送的类型
+
+发后即忘： 消息丢失  
+同步：需要等待，性能差  
+异步：可以获取其对应的结果，也可以不捕获
+
+
+
+
+
 
 
 
