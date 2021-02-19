@@ -42,6 +42,11 @@ Elasticsearch节点可以是主节点（Master），数据节点（Data），客
 1、将应用和索引名称隔离；  
 2、可以方便的实现跨索引检索。
 
+```text
+https://www.elastic.co/guide/cn/elasticsearch/guide/current/multiple-indices.html
+一个搜索请求可以以多个索引为目标，所以将搜索别名指向 tweets_1 以及 tweets_2 是完全有效的。 
+```
+
 #### 4.2 数据类型选型
 
 若不指定数据类型的动态映射机制，比如：字符串类型会默认存储为text和keyword两种类型，势必会`增加存储成本`。  
