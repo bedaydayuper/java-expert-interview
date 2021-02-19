@@ -52,10 +52,14 @@ Elasticsearch节点可以是主节点（Master），数据节点（Data），客
 2、是否需要存储；  
 3、是否需要分词；  
 4、是否需要聚合；  
-5、是否需要多表关联（nested类型、join或者是宽表存储）；  
-6、是否需要快速响应（keyword和long类型选型）  
-……  
-此处的`设计时间不能省`。
+5、是否需要多表关联（nested类型、join或者是宽表存储）；
+
+```text
+join :
+https://blog.csdn.net/laoyang360/article/details/79774481
+
+感觉用处不大呢。
+```
 
 ### 5、检索选型
 
