@@ -101,6 +101,21 @@ docs.deleted 删除文档数量
 store.size 存储占用大小
 ```
 
+其中docs.deleted 为 删除文档数量，如果想验证，可以通过如下两步，先删除一个文档，然后强制段合并，进行先后查看。
+
+```text
+## 删除某个文档
+DELETE bank/account/25
+
+## 查看索引情况
+GET _cat/indices?v&pretty
+
+## 强制执行段合并
+POST /bank/_forcemerge?max_num_segments=1
+## 再次查看索引情况
+GET _cat/indices?v&pretty
+```
+
 如果要查看某个索引的信息，可以使用如下指令：
 
 ```text
