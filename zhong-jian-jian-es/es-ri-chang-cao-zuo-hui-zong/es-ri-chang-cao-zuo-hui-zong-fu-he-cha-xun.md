@@ -234,7 +234,264 @@ POST student/_search
 }
 ```
 
-## 2 boosting query 
+## 2 关于bool query 中should 的用法
+
+> 所有 `must` 语句必须匹配，所有 `must_not` 语句都必须不匹配，但有多少 `should` 语句应该匹配呢？默认情况下，没有 `should` 语句是必须匹配的，只有一个例外：那就是当没有 `must` 语句的时候，至少有一个 `should` 语句必须匹配。
+
+[https://www.elastic.co/guide/cn/elasticsearch/guide/current/bool-query.html](https://www.elastic.co/guide/cn/elasticsearch/guide/current/bool-query.html)  
+
+
+```text
+## 此时，有must, 所以should 可以匹配，也可以不匹配。 
+## 所以刘德华 这条数据就出来了。
+POST student/_search
+{
+  "query": {
+    "bool" : {
+      "must" : {
+        "term" : { "interests" : "演" }
+      },
+      "must_not": {
+        "range" : {
+          "age" : {"gte" : 60}
+        } 
+      },
+      "should": {
+        "term" : {"name" : "强"} 
+      }
+    }
+  }
+}
+结果：
+{
+  "took": 0,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "failed": 0
+  },
+  "hits": {
+    "total": 2,
+    "max_score": 1.7983742,
+    "hits": [
+      {
+        "_index": "student",
+        "_type": "student_type",
+        "_id": "5",
+        "_score": 1.7983742,
+        "_source": {
+          "name": "向华强",
+          "address": "香港",
+          "age": 31,
+          "interests": "演戏 主持",
+          "birthday": "1958-06-19"
+        }
+      },
+      {
+        "_index": "student",
+        "_type": "student_type",
+        "_id": "2",
+        "_score": 0.57843524,
+        "_source": {
+          "name": "刘德华",
+          "address": "香港",
+          "age": 28,
+          "interests": "演戏 旅游",
+          "birthday": "1980-06-19"
+        }
+      }
+    ]
+  }
+}
+```
+
+再来一个只有should 的demo
+
+```text
+## 因为只有should, 所以刘德华 这条数据就不符合要求了。
+POST student/_search
+{
+  "query": {
+    "bool" : {
+      "should": {
+        "term" : {"name" : "强"}  
+      }
+    }
+  }
+}
+结果：
+{
+  "took": 0,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 1.219939,
+    "hits": [
+      {
+        "_index": "student",
+        "_type": "student_type",
+        "_id": "5",
+        "_score": 1.219939,
+        "_source": {
+          "name": "向华强",
+          "address": "香港",
+          "age": 31,
+          "interests": "演戏 主持",
+          "birthday": "1958-06-19"
+        }
+      }
+    ]
+  }
+}
+```
+
+没有must, 有must\_not, 有 should 会怎样呢？  
+&gt; 此时，should 也必须满足。
+
+看如下的例子：
+
+```text
+## 只有must_not 时查询：
+
+POST student/_search
+{
+  "query": {
+    "bool" : {
+      "must_not": {
+        "range" : {
+          "age" : {"gte" : 60}
+        } 
+      }
+    }
+  }
+}
+结果 有多条：
+{
+  "took": 0,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "student",
+        "_type": "student_type",
+        "_id": "1",
+        "_score": 1,
+        "_source": {
+          "name": "徐小小",
+          "address": "杭州",
+          "age": 3,
+          "interests": "唱歌 画画  跳舞",
+          "birthday": "2017-06-19"
+        }
+      },
+      {
+        "_index": "student",
+        "_type": "student_type",
+        "_id": "2",
+        "_score": 1,
+        "_source": {
+          "name": "刘德华",
+          "address": "香港",
+          "age": 28,
+          "interests": "演戏 旅游",
+          "birthday": "1980-06-19"
+        }
+      },
+      {
+        "_index": "student",
+        "_type": "student_type",
+        "_id": "3",
+        "_score": 1,
+        "_source": {
+          "name": "张小斐",
+          "address": "北京",
+          "age": 28,
+          "interests": "小品 旅游",
+          "birthday": "1990-06-19"
+        }
+      },
+      {
+        "_index": "student",
+        "_type": "student_type",
+        "_id": "5",
+        "_score": 1,
+        "_source": {
+          "name": "向华强",
+          "address": "香港",
+          "age": 31,
+          "interests": "演戏 主持",
+          "birthday": "1958-06-19"
+        }
+      }
+    ]
+  }
+}
+
+
+## 如果有must_not  跟 should
+POST student/_search
+{
+  "query": {
+    "bool" : {
+      "must_not": {
+        "range" : {
+          "age" : {"gte" : 60}
+        } 
+      },
+      "should": {
+        "term" : {"name" : "强"}  
+      }
+    }
+  }
+}
+
+结果：（也只有一条）
+{
+  "took": 0,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 1.219939,
+    "hits": [
+      {
+        "_index": "student",
+        "_type": "student_type",
+        "_id": "5",
+        "_score": 1.219939,
+        "_source": {
+          "name": "向华强",
+          "address": "香港",
+          "age": 31,
+          "interests": "演戏 主持",
+          "birthday": "1958-06-19"
+        }
+      }
+    ]
+  }
+}
+```
+
+
+
+## 3 boosting query 
 
 must\_not 直接将doc 排除掉，有时需要将包含某些字符的doc 权重降低，此时可以使用 boosting query。  
 
@@ -274,17 +531,17 @@ POST news/news_type/_search
 }
 ```
 
-## 3 constant\_score （固定分数）
+## 4 constant\_score （固定分数）
 
 暂时忽略，不常用。可以参考：
 
 [https://www.elastic.co/guide/cn/elasticsearch/guide/current/ignoring-tfidf.html](https://www.elastic.co/guide/cn/elasticsearch/guide/current/ignoring-tfidf.html)
 
-## 4 dis\_max （最佳匹配查询）
+## 5 dis\_max （最佳匹配查询）
 
 暂时忽略，不常用。
 
-## 5 function\_score 函数查询
+## 6 function\_score 函数查询
 
 暂时忽略，不常用。
 
