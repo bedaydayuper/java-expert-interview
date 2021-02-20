@@ -348,54 +348,65 @@ DELETE demo_index2
 
 ### 1.4 修改-增加字段
 
-> mapping一旦创建之后，就无法修改，只能追加，如果要修改，就需要删除掉整个文档进行重建。
+> mapping一旦创建之后，就无法修改，只能追加，如果要修改，就需要删除掉整个文档进行重建。  
+>   
+> 在ES里为已有索引增加一个新字段以后，老的数据并不会自动就拥有了这个新字段，也就不可能给他一个所谓的默认值。ES里的数据都是文档型的，修改一个文档只能是对原文档做更新，也就是只能借助于重新索引的手段。
+>
+>   
+> es 对历史数据增加字段，并赋初始值[： https://blog.csdn.net/zhou\_shaowei/article/details/81975476](https://blog.csdn.net/zhou_shaowei/article/details/81975476)
 
 ```text
-创建时，只增加了properTest properTest2, 如下：
+创建时，只增加了properTest, 如下：
+## 创建索引
 PUT demo_index2
 {
     "mappings": {
       "demo_type": {
         "properties": {
           "properTest": {
-            "properties": {
-              "age": {
-                "type": "long"
-              },
-              "name": {
-                "type": "text",
-                "fields": {
-                  "keyword": {
-                    "type": "keyword",
-                    "ignore_above": 256
-                  }
-                }
-              }
-            }
-          },
-          "properTest2": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
+            "type": "keyword"
           }
         }
       }
     }
 }
 
-现在想添加
+## 插入数据 1
+PUT demo_index2/demo_type/1
+{
+  "properTest": "aaaa"
+}
+
+GET demo_index2/demo_type/_search
+
+## 增加mapping
 PUT /demo_index2/demo_type/_mapping
 {
     "properties": {
-      "properTest3": {
+      "properTest1": {
         "type": "integer"
       }
     }
 }
+## 插入数据 2
+PUT demo_index2/demo_type/2
+{
+  "properTest": "aaaa",
+  "properTest1": 1
+}
+## 查看，发现1 并没有 properTest1 这个字段。
+GET demo_index2/demo_type/_search
+
+## 结合脚本，对历史数据进行更新
+POST demo_index2/_update_by_query
+{
+  "script": {
+    "lang": "painless",
+    "inline": "if (ctx._source.properTest1 == null) {ctx._source.properTest1= -1}"
+  }
+}
+## 查看，发现1 的 properTest1 这个字段已经被设置为-1 了。
+GET demo_index2/demo_type/_search
 
 ```
 
