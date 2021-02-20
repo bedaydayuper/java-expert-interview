@@ -156,6 +156,29 @@ epoch      timestamp count
 结果分析：
 ```
 
+如果要查看某个索引中的文档数量，通过如下指令：
+
+```text
+
+## 其中bank 为索引 
+GET _cat/count/bank?v&pretty    
+
+```
+
+如果要查看某个检索条件下的数量，可以通过如下指令：
+
+```text
+GET bank/_count
+{
+  "query": {
+    "match": {
+      "firstname": "Aurelia"
+    }
+  }
+}
+
+```
+
 ### 1.8 集群内不同类型线程池的统计信息
 
 ```text
