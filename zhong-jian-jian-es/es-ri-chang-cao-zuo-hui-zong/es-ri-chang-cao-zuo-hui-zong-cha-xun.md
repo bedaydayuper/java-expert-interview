@@ -47,14 +47,6 @@ POST /student/student_type/1
   "interests":"唱歌 画画  跳舞",
   "birthday":"2017-06-19"
 }
-POST /student/student_type/1
-{
-  "name":"徐小小",
-  "address":"杭州",
-  "age":3,
-  "interests":"唱歌 画画  跳舞",
-  "birthday":"2017-06-19"
-}
 
 POST /student/student_type/2
 {
@@ -441,7 +433,8 @@ GET student/_search
 }
 ```
 
-
+> wildcard 是性能杀手，在数据量较大的情况，他会查询的非常非常慢，很容易出现卡死，甚至导致集群节点崩溃宕机的情况。  
+> 参考： [https://juejin.cn/post/6862238580094435342](https://juejin.cn/post/6862238580094435342)
 
 ## 2 Filter 查询 
 
