@@ -200,6 +200,7 @@ PUT my_index/my_type/1
       "last" :  "White"
     }
   ]
+  }
 
 会进行打平：
 {
@@ -208,7 +209,63 @@ PUT my_index/my_type/1
   "user.last" :  [ "smith", "white" ]
 }
 
-user.first和user.last会被平铺为多值字段，Alice和White之间的关联关系会消失。上面的文档会不正确的匹配以下查询(虽然能搜索到,实际上不存在Alice Smith)：
+user.first和user.last会被平铺为多值字段，Alice和White之间的关联关系会消失。
+上面的文档会不正确的匹配以下查询(虽然能搜索到,实际上不存在Alice Smith)：
+GET my_index/my_type/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "user.first": "Alice"
+          }
+        },
+        {
+          "match": {
+            "user.last": "Smith"
+          }
+        }
+      ]
+    }
+  }
+}
+
+结果：
+{
+  "took": 10,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 0.51623213,
+    "hits": [
+      {
+        "_index": "my_index",
+        "_type": "my_type",
+        "_id": "1",
+        "_score": 0.51623213,
+        "_source": {
+          "group": "fans",
+          "user": [
+            {
+              "first": "John",
+              "last": "Smith"
+            },
+            {
+              "first": "Alice",
+              "last": "White"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
 
 
 使用nested字段类型解决Object类型的不足：
@@ -219,7 +276,27 @@ PUT my_index
     "my_type": {
       "properties": {
         "user": {
-          "type": "nested" 
+          "type": "nested",
+          "properties": {
+              "first": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              },
+              "last": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword",
+                    "ignore_above": 256
+                  }
+                }
+              }
+            }
         }
       }
     }
@@ -258,6 +335,7 @@ GET my_index/_search
   }
 }
  
+ 一条结果也搜不到了。
 ```
 
 
