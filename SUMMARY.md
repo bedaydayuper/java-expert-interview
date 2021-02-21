@@ -38,12 +38,12 @@
 ## 中间件-es
 
 * [Lucene 分析](zhong-jian-jian-es/lucene-fen-xi.md)
-* [ES 面试题](zhong-jian-jian-es/es-mianshiti/README.md)
-  * [ES 面试题（一）数据模型](zhong-jian-jian-es/es-mianshiti/es-shu-ju-mo-xing.md)
-  * [ES 面试题（二）集群管理与读写流程](zhong-jian-jian-es/es-mianshiti/es-mian-shi-ti-er-ji-qun-guan-li-yu-du-xie-liu-cheng.md)
-  * [ES 面试题（三）调优](zhong-jian-jian-es/es-mianshiti/es-mian-shi-ti-yi.md)
-  * [【转】ES 技术选型-给出了技术选型的参考模板](zhong-jian-jian-es/es-mianshiti/zhuan-es-ji-shu-xuan-xing-gei-chu-le-ji-shu-xuan-xing-de-can-kao-mo-ban.md)
-  * [Lucene 底层结构](zhong-jian-jian-es/es-mianshiti/lucene-di-ceng-jie-gou.md)
+* [ES 面试题](zhong-jian-jian-es/es-mian-shi-ti/README.md)
+  * [ES 面试题（一）数据模型](zhong-jian-jian-es/es-mian-shi-ti/es-shu-ju-mo-xing.md)
+  * [ES 面试题（二）集群管理与读写流程](zhong-jian-jian-es/es-mian-shi-ti/es-mian-shi-ti-er-ji-qun-guan-li-yu-du-xie-liu-cheng.md)
+  * [ES 面试题（三）调优](zhong-jian-jian-es/es-mian-shi-ti/es-mian-shi-ti-yi.md)
+  * [【转】ES 技术选型-给出了技术选型的参考模板](zhong-jian-jian-es/es-mian-shi-ti/zhuan-es-ji-shu-xuan-xing-gei-chu-le-ji-shu-xuan-xing-de-can-kao-mo-ban.md)
+  * [Lucene 底层结构](zhong-jian-jian-es/es-mian-shi-ti/lucene-di-ceng-jie-gou.md)
 * [ES日常操作汇总](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong/README.md)
   * [ES 日常操作汇总-运维](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong/es-ri-chang-cao-zuo-hui-zong-yun-wei.md)
   * [ES 日常操作汇总-文档与索引的CRUD](zhong-jian-jian-es/es-ri-chang-cao-zuo-hui-zong/es-ri-chang-cao-zuo-hui-zong-gou-jian.md)
