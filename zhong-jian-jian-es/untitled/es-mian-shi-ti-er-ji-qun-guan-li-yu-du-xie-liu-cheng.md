@@ -4,7 +4,7 @@
 
 ### 1.1 启动流程
 
-![&#x542F;&#x52A8;](../../.gitbook/assets/image%20%2840%29.png)
+![&#x542F;&#x52A8;](../../.gitbook/assets/image%20%2842%29.png)
 
 ### 1.2 确定主节点
 
@@ -16,13 +16,13 @@
 * 得票人数过半
 * 当节点离开时，必须判断当前节点数是否过半。
 
-![&#x9009;&#x4E3B;&#x5168;&#x6D41;&#x7A0B;](../../.gitbook/assets/image%20%2837%29.png)
+![&#x9009;&#x4E3B;&#x5168;&#x6D41;&#x7A0B;](../../.gitbook/assets/image%20%2838%29.png)
 
-![&#x9009;&#x4E3E;&#x4E34;&#x65F6;master](../../.gitbook/assets/image%20%2838%29.png)
+![&#x9009;&#x4E3E;&#x4E34;&#x65F6;master](../../.gitbook/assets/image%20%2839%29.png)
 
-![&#x786E;&#x7ACB;master](../../.gitbook/assets/image%20%2836%29.png)
+![&#x786E;&#x7ACB;master](../../.gitbook/assets/image%20%2837%29.png)
 
-![&#x5B9A;&#x671F;&#x68C0;&#x67E5;](../../.gitbook/assets/image%20%2842%29.png)
+![&#x5B9A;&#x671F;&#x68C0;&#x67E5;](../../.gitbook/assets/image%20%2844%29.png)
 
 ### 1.3 选举元信息
 
@@ -49,13 +49,15 @@
 划分了两个阶段：  
 
 
-![](../../.gitbook/assets/image%20%2839%29.png)
+![](../../.gitbook/assets/image%20%2840%29.png)
 
 
 
 ## 2 单个节点的启动与关闭
 
+![&#x8282;&#x70B9;&#x542F;&#x52A8;](../../.gitbook/assets/image%20%2835%29.png)
 
+![&#x8282;&#x70B9;&#x5173;&#x95ED;](../../.gitbook/assets/image%20%2841%29.png)
 
 ## 3倒排索引
 
