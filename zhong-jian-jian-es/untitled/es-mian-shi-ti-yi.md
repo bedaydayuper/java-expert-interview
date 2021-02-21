@@ -52,7 +52,7 @@
 
 #### 1.4.1 filesystem
 
-![](../../.gitbook/assets/image%20%2843%29.png)
+![](../../.gitbook/assets/image%20%2847%29.png)
 
 ES 的搜索引擎严重依赖于底层的 Filesystem Cache，你如果给 Filesystem Cache 更多的内存，尽量让内存可以容纳所有的 IDX Segment File 索引数据文件，那么你搜索的时候就基本都是走内存的，性能会非常高。
 
