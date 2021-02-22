@@ -86,7 +86,10 @@ Header
 
 ![](../.gitbook/assets/image%20%2850%29.png)
 
+  
 整个发送过程由主线程 和 sender 线程协调运行。
+
+![](../.gitbook/assets/image%20%2851%29.png)
 
 > 主线程负责创建消息，然后通过拦截器、序列化器和分区器的作用之后，缓存到消息累加器；
 
