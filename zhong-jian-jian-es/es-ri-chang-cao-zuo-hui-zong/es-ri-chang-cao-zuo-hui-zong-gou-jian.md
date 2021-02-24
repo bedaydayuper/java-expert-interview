@@ -579,6 +579,114 @@ POST demo_index2/demo_type/1/_update
 DELETE /{index}/{type}/{id}
 ```
 
+### 2.5 历史数据没有索引，加索引之后，如果让历史数据也支持索引？
+
+```text
+DELETE  test_index2
+
+# 创建一个没有 commodity_name  的mapping index, "dynamic"设置为"false"
+PUT test_index2
+{
+	"mappings": {
+		"test_type": {
+		  "dynamic": "false",
+			"properties": {
+				"commodity_id": {
+					"type": "long"
+				},
+		
+				"picture_url": {
+					"type": "keyword"
+				}
+			}
+		}
+	}
+}
+
+# 插入数据
+PUT test_index2/test_type/1
+{
+  "commodity_id": 1,
+  "commodity_name": {
+    "desc" : "my name is zhangpeng"
+  },
+  "picture_url": "www.1.com"
+}
+
+# 查询，此时不会返回值。
+GET test_index2/test_type/_search
+{
+  "query": {
+    "match": {
+      "commodity_name.desc": "zhangpeng"
+    }
+  }
+}
+
+# 更新mapping, 对 commodity_name 的 desc 加索引
+PUT test_index2/_mapping/test_type
+{
+
+      "properties": {
+        "commodity_id": {
+          "type": "long"
+        },
+        "commodity_name": {
+          "properties": {
+            "desc": {
+              "type": "text",
+              "index": true
+            }
+          }
+        },
+        "picture_url": {
+          "type": "keyword"
+        }
+      }
+   
+}
+
+
+# 再查，历史数据还是没有返回
+GET test_index2/test_type/_search
+{
+  "query": {
+    "match": {
+      "commodity_name.desc": "zhangpeng"
+    }
+  }
+}
+
+
+# 基于某些条件，把历史数据查出来，然后使用script 更新某个字段（通常是时间戳等跟业务无关的字段）
+POST  test_index2/test_type/_update_by_query
+{
+  "script": {
+    "inline": "ctx._source.commodity_id  += 1"
+    
+  },
+  "query" : {
+    "match": {
+      "commodity_id" : 1
+    } 
+  }
+}
+
+## https://stackoverflow.com/questions/36589963/elasticsearchuse-script-to-update-nested-field
+
+## 再次查询 ，就已经有值返回了。
+
+GET test_index2/test_type/_search
+{
+  "query": {
+    "match": {
+      "commodity_name.desc": "zhangpeng"
+    }
+  }
+}
+
+```
+
 ## 参考文献：
 
 mapping 的设置： [https://blog.csdn.net/ZYC88888/article/details/83059040](https://blog.csdn.net/ZYC88888/article/details/83059040)
