@@ -687,6 +687,9 @@ GET test_index2/test_type/_search
 
 ```
 
+注意： 脚本更新，如果命中数据量比较大，则性能会比较差，如下链接有一个可以优化的方案：  
+[https://elasticsearch.cn/article/13548](https://elasticsearch.cn/article/13548)
+
 ## 参考文献：
 
 mapping 的设置： [https://blog.csdn.net/ZYC88888/article/details/83059040](https://blog.csdn.net/ZYC88888/article/details/83059040)
