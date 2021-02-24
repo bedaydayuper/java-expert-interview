@@ -236,13 +236,13 @@ onPartitionsAssigned: 在重新分配分区之后和消费者开始读取消费�
 多线程的目的就是为了提高整体的消费能力。  
 
 
-![](../.gitbook/assets/image%20%2853%29.png)
+![](../.gitbook/assets/image%20%2854%29.png)
 
 一个线程对应一个kafkaConsumer 实例，也称为 消费线程。
 
 也可以提高消息处理的能力，比如使用线程池处理，如下的模型：
 
-![](../.gitbook/assets/image%20%2852%29.png)
+![](../.gitbook/assets/image%20%2853%29.png)
 
 
 
@@ -261,6 +261,64 @@ onPartitionsAssigned: 在重新分配分区之后和消费者开始读取消费�
 
 
 ## 4 主题与分区
+
+### 4.1、主题的管理
+
+1、主题、分区、副本和log 的关系
+
+![](../.gitbook/assets/image%20%2852%29.png)
+
+主题和分区都是提供给上层用户的抽象，而在副本层面或更加确切地说是Log层才有实际的物理上的存在。
+
+```text
+topic 和 partition 表示主题和分区；
+partitionCount 表示主题中分区的个数
+ReplicationFactor 表示副本因子
+Configs 表示创建或者修改主题时指定的参数配置
+Leader 表示分区leader 副本所在的brokerid
+Isr 表示分区ISR集合
+Replicas 表示分区的所有的副本分配情况
+```
+
+2、分区分配
+
+这儿是指为集群指定创建主题时的分区副本分配方案，即在哪个broker 中创建哪些分区的副本。
+
+### 4.2 kafkaAdminClient
+
+主题管理类的功能集成到公司内部的系统中，实现管理、监控、运维、告警等，kafkaAdminClient 就提供了这样的API。
+
+### 4.3 分区的管理
+
+#### 4.3.1 优先副本的选举
+
+1、只有leader副本对外提供读写服务，而follower 副本只负责在内部进行消息的同步。
+
+leader 副本所在的broker节点叫做分区的leader节点，而follower 副本所在的broker节点 叫做分区的follower 节点。
+
+2、优先副本：在AR集群列表中的第一个副本，理想情况下优先副本是该分区的leader副本。
+
+优先副本的选举是指通过一定的方式促使优先副本选举为leader副本，一次来促进集群的负载均衡。也称为 ”分区平衡“。
+
+#### 4.3.2  分区重分配
+
+a
+
+
+
+
+
+
+
+
+
+
+
+#### 4.3.3 
+
+### 4.4 如何选择合适的分区数
+
+
 
 
 
