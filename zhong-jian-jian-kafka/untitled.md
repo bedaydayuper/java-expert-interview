@@ -250,7 +250,25 @@ onPartitionsAssigned: 在重新分配分区之后和消费者开始读取消费�
 
 
 
+消费者整体流程：
 
+参考：[https://www.cnblogs.com/dennyzhangdd/p/7759876.html](https://www.cnblogs.com/dennyzhangdd/p/7759876.html)
+
+![](../.gitbook/assets/image%20%2855%29.png)
+
+主要流程：
+
+```text
+1.容器启动，轮询执行消费。
+
+2.kafkaConsumer拉取消息流程：
+
+1）Fetcher请求获取器获取请求并存储在unset中
+
+2）ConsumerNetworkClient网络客户端执行poll(),调用NetWlrikClient的send()方法从unset中获取ClientRequest请求转成RequestSend最终塞进Selector的KafkaChannel通道中，Seletcor.send()从kafka集群拉取待消费数据ConsumerRecords
+
+3. 消费者监听器MessageListener.onMessage()执行用户自定义的实际消费业务逻辑。
+```
 
 
 
