@@ -29,6 +29,7 @@ PUT /student
   },
   "mappings": {   // 索引的mappings
     "demoType": {    // type, 在新的版本里面 type 不再使用。
+      "dynamic": false,  // 不会自动创建索引
       "properties": {   // 属性
         "name": {
           "type": "text", // 类型
@@ -338,7 +339,51 @@ GET my_index/_search
  一条结果也搜不到了。
 ```
 
+看一个包含上述知识点的最常见的mapping:
 
+```text
+DELETE student
+
+PUT student
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1
+  },
+  "mappings": {
+    "student_type" : {
+      "dynamic": false,
+      "properties": {
+        "name" : {
+          "type" : "text",
+          "index" : false
+        },
+        "country":{
+          "type": "text"
+        },
+        "age" : {
+          "type": "integer"
+        },
+        "address" : {
+          "type": "nested",
+          "properties": {
+            "provice": {
+              "type" : "text"
+            },
+            "city" : {
+              "type" : "text"
+            }
+            
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+```
 
 ### 1.3 删除
 
