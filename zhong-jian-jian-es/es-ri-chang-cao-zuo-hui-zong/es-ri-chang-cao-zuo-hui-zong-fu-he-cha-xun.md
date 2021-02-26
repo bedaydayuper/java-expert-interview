@@ -491,7 +491,7 @@ POST student/_search
 
 
 
-## 3 boosting query 
+## 3 boosting query  不常用
 
 must\_not 直接将doc 排除掉，有时需要将包含某些字符的doc 权重降低，此时可以使用 boosting query。  
 
@@ -531,17 +531,17 @@ POST news/news_type/_search
 }
 ```
 
-## 4 constant\_score （固定分数）
+## 4 constant\_score （固定分数） 不常用
 
 暂时忽略，不常用。可以参考：
 
 [https://www.elastic.co/guide/cn/elasticsearch/guide/current/ignoring-tfidf.html](https://www.elastic.co/guide/cn/elasticsearch/guide/current/ignoring-tfidf.html)
 
-## 5 dis\_max （最佳匹配查询）
+## 5 dis\_max （最佳匹配查询） 不常用
 
 暂时忽略，不常用。
 
-## 6 function\_score 函数查询
+## 6 function\_score 函数查询 不常用
 
 暂时忽略，不常用。
 
