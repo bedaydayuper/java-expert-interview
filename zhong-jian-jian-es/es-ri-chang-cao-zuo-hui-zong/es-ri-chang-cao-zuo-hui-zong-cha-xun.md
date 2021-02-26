@@ -187,6 +187,10 @@ GET student/_search
 
 ### 1.2 term 查询和terms 查询
 
+{% hint style="info" %}
+term 查询时，虽然是精确匹配，但是如果在建索引时是text ，进行了分词，则 term 匹配的是分词之后的逐个词。 比如“德州”，经过分词之后，会有“德”， “州”, "德州" 三个分词，所以在使用 term 查询时，“德”， “州”, "德州" 三个分词 **如果作为term 查询词，则都能匹配上。**
+{% endhint %}
+
 > term query: 查找确切的term， 不知道的分词器的存在。适合 keyword、numeric、date.
 >
 > term： 查询某个字段为该关键词的文档（她是相等关系而不是包含关系）
