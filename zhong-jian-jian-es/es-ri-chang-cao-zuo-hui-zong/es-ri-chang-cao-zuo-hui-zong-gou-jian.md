@@ -396,9 +396,14 @@ DELETE demo_index2
 > mapping一旦创建之后，就无法修改，只能追加，如果要修改，就需要删除掉整个文档进行重建。  
 >   
 > 在ES里为已有索引增加一个新字段以后，老的数据并不会自动就拥有了这个新字段，也就不可能给他一个所谓的默认值。ES里的数据都是文档型的，修改一个文档只能是对原文档做更新，也就是只能借助于重新索引的手段。
+
+
+
+> 如果想使老数据有新值，如下链接  
+> es 对历史数据增加字段，并赋初始值[： https://blog.csdn.net/zhou\_shaowei/article/details/81975476](https://blog.csdn.net/zhou_shaowei/article/details/81975476)  
 >
->   
-> es 对历史数据增加字段，并赋初始值[： https://blog.csdn.net/zhou\_shaowei/article/details/81975476](https://blog.csdn.net/zhou_shaowei/article/details/81975476)
+>
+> 如果已经有历史数据，且想让新索引在历史数据上生效，可以参考2.5
 
 ```text
 创建时，只增加了properTest, 如下：
@@ -469,8 +474,8 @@ curl -XPOST localhost:9200/_aliases -d '
 {  
     "actions": [  
         { "add": {  
-            "alias": "my_index",  
-            "index": "my_index_v1"  
+            "alias": "my_index",   // 别名
+            "index": "my_index_v1"    // 被别名的索引
         }}  
     ]  
 }  
