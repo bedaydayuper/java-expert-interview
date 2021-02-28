@@ -523,7 +523,46 @@ kafka 存在大量的延时操作，但是kafka 并没有使用JDK自带的Timer
 （2）脑裂问题：同一时刻，各个消费者获取的状态不一致。
 ```
 
-2、
+2、新版使用了  
+GroupCoordinator, 服务端用于管理消费组的组件。  
+ConsumerCoordinator, 客户端组件，负责与GroupCoordinator 交互。
+
+3、再均衡 
+
+借助ConsumerCoordinator 与GroupCoordinator ，执行消费者再均衡的操作。
+
+再均衡的场景：
+
+```text
+1、新消费者加入消费组
+2、有消费者宕机下线
+3、有消费者主动退出消费组
+4、消费组对应的GroupCoornator 节点发生了变化
+5、消费组内所订阅的任一主题或者主题的分片数量发生变化。
+
+```
+
+新节点加入group的再均衡阶段：
+
+```text
+1 find coordinator
+2 join group
+3 sync group 
+4 heartbeat
+```
+
+4、选举消费组的leader
+
+GroupCoordinator 为消费组内的消费者选举一个消费者的leader。
+
+机制：
+
+如果消费组内还没有，则选择第一个进入的消费者作为leader。  
+如果某一时刻leader消费者退出了消费组，则随机选一个新leader 消费者。
+
+5、选举分区分配策略
+
+消费组内各个消费者投票决定最终用哪个。
 
 ### 7.3 \_consumer\_offsets 剖析
 
