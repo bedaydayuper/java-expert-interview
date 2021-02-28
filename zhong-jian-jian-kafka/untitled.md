@@ -566,6 +566,10 @@ GroupCoordinator 为消费组内的消费者选举一个消费者的leader。
 
 ### 7.3 \_consumer\_offsets 剖析
 
+位移提交会保存在kafka 内部主题 \_\_consumer offsets 中。
+
+偏移值一般默认保留7天，超过了则被删除，消费者再次消费时，只能根据参数，是决定从lastest 还是earliest 开始消费。
+
 
 
 ### 7.4 事务
