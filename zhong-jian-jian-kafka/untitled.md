@@ -254,7 +254,9 @@ onPartitionsAssigned: 在重新分配分区之后和消费者开始读取消费�
 
 ### 3.2 消费者整体流程-源码解析：
 
-参考：[https://www.cnblogs.com/dennyzhangdd/p/7759876.html](https://www.cnblogs.com/dennyzhangdd/p/7759876.html)
+参考：  
+[https://www.cnblogs.com/dennyzhangdd/p/7759876.html](https://www.cnblogs.com/dennyzhangdd/p/7759876.html)  
+[http://yeming.me/2016/12/30/kafkaConsumer/](http://yeming.me/2016/12/30/kafkaConsumer/)
 
 ![](../.gitbook/assets/image%20%2855%29.png)
 
