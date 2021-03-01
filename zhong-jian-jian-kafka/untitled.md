@@ -610,6 +610,32 @@ LEO 标识每个分区中最后一条消息的下一个位置，分区的每个�
   
 2、失效副本：
 
+副本失效的两种情况：
+
+```text
+（1）follower 副本进程卡住，在一段时间内根本没有向leader副本发起同步请求
+（2）follower 副本进程同步过慢，在一段时间内都无法追赶上leader 副本
+```
+
+3、LEO与 HW
+
+leader 副本会记录各个follower 副本的LEO,  各个follower副本只记录自己的LEO。
+
+4、Leader epoch
+
+引入 leader epoch 可以解决数据不一致和数据丢失的问题。
+
+在需要截断数据时，使用leader epoch 作为参考依据而不是HW. 
+
+5、kafka 为什么不采用读写分离？
+
+```text
+1、数据不一致问题
+2、延时问题
+```
+
+
+
 
 
 ### 8.2 日志同步机制
