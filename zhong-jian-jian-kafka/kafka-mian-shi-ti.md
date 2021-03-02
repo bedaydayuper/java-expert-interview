@@ -115,9 +115,57 @@ Consumer 从 Message Broker 中获取到消息，必须在消费完成后，Mess
 
 适合对消息消费情况要求非常高的任务，实现较为复杂。
 
+#### 4.3.1 broker上存储的消息被consumer仅消费一次
+
+1、producer --&gt; broker
+
+producer 不关心broker是否收到消息，也不要求broker 收到消息之后确认。
+
+2、broker 存储转发阶段
+
+必须提供持久化保证。
+
+每条消息都有唯一标识
+
+3、broker--&gt; consumer 消费  
+consumer  消费之后，必须记下标识，防止重复消费。
+
+
+
+#### 4.3.2 producer 上产生的消息被consumer仅消费一次
+
+1、producer --&gt; broker  
+broker 必须响应生产者的消息，并且producer负责为该消息产生唯一标识，以防止consumer重复消费。
+
+2、broker 存储转发阶段  
+必须提供持久化保证。
+
+每条消息都有唯一标识
+
+3、broker--&gt; consumer 消费  
+consumer  消费之后，必须记下标识，防止重复消费。
+
+
+
 
 
 ## 5 
+
+
+
+
+
+## 疑问
+
+1、kafka  在保证消息不丢失方面，是如何做的？
+
+
+
+2、kafka 在保证消息不重复方面，是如何做的？
+
+
+
+## 参考
 
 
 
