@@ -56,6 +56,7 @@
 ## 中间件-kafka
 
 * [深入理解kafka](zhong-jian-jian-kafka/untitled.md)
+* [kafka-面试题](zhong-jian-jian-kafka/kafka-mian-shi-ti.md)
 
 ## 中间件-redis
 

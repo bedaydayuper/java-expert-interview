@@ -367,7 +367,7 @@ leader 副本所在的broker节点叫做分区的leader节点，而follower 副�
 
 1、 日志关系
 
-![&#x65E5;&#x5FD7;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%2862%29.png)
+![&#x65E5;&#x5FD7;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%2870%29.png)
 
 
 
@@ -407,7 +407,7 @@ leader 副本所在的broker节点叫做分区的leader节点，而follower 副�
 
 3、日志压缩
 
-![](../.gitbook/assets/image%20%2858%29.png)
+![](../.gitbook/assets/image%20%2860%29.png)
 
 4、
 
@@ -451,7 +451,7 @@ FetchResponse
 
 kafka 存在大量的延时操作，但是kafka 并没有使用JDK自带的Timer 或者DelayQueue 来实现延时的功能。而是基于时间轮的概念自定义实现了一个用于延时功能的定时器。性能高。
 
-![&#x591A;&#x5C42;&#x65F6;&#x95F4;&#x8F6E;](../.gitbook/assets/image%20%2857%29.png)
+![&#x591A;&#x5C42;&#x65F6;&#x95F4;&#x8F6E;](../.gitbook/assets/image%20%2859%29.png)
 
 类似于钟表 的秒针、分针和时针。
 
@@ -463,7 +463,7 @@ kafka 存在大量的延时操作，但是kafka 并没有使用JDK自带的Timer
 
 3、延时操作需要支持外部事件的触发，所以还要配备一个监听池来负责监听每个分区的外部事件，查看是否有分区的HW 发生了增长。
 
-![](../.gitbook/assets/image%20%2861%29.png)
+![](../.gitbook/assets/image%20%2866%29.png)
 
 4、同样，拉取也有延时操作。
 
@@ -506,7 +506,7 @@ kafka 存在大量的延时操作，但是kafka 并没有使用JDK自带的Timer
 
 比如组内广播：
 
-![](../.gitbook/assets/image%20%2859%29.png)
+![](../.gitbook/assets/image%20%2861%29.png)
 
 组内广播 会有一个严重的问题：默认的消费位移的提交就会失效。如果要真正实现组内广播，则需要自己保存每个消费者的消费位移。
 
@@ -655,11 +655,11 @@ leader 副本会记录各个follower 副本的LEO,  各个follower副本只记�
 常见的做法：在发送延时消息时 并不是先投递到要发送的真实主题中，而是先投递到一些kafka 内部的主题中，这些内部主题对用户不可见，然后通过一个自定义的服务拉取这些内部主题中的消息，并将满足条件的消息再投递到要发送的真实的主题中。  
 
 
-![](../.gitbook/assets/image%20%2860%29.png)
+![](../.gitbook/assets/image%20%2865%29.png)
 
 ###  
 
-![](../.gitbook/assets/image%20%2856%29.png)
+![](../.gitbook/assets/image%20%2857%29.png)
 
 ### 9.2、死信队列和重试队列
 
