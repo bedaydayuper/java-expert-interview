@@ -367,7 +367,7 @@ leader 副本所在的broker节点叫做分区的leader节点，而follower 副�
 
 1、 日志关系
 
-![&#x65E5;&#x5FD7;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%2870%29.png)
+![&#x65E5;&#x5FD7;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%2871%29.png)
 
 
 
@@ -463,7 +463,7 @@ kafka 存在大量的延时操作，但是kafka 并没有使用JDK自带的Timer
 
 3、延时操作需要支持外部事件的触发，所以还要配备一个监听池来负责监听每个分区的外部事件，查看是否有分区的HW 发生了增长。
 
-![](../.gitbook/assets/image%20%2866%29.png)
+![](../.gitbook/assets/image%20%2867%29.png)
 
 4、同样，拉取也有延时操作。
 
@@ -655,7 +655,7 @@ leader 副本会记录各个follower 副本的LEO,  各个follower副本只记�
 常见的做法：在发送延时消息时 并不是先投递到要发送的真实主题中，而是先投递到一些kafka 内部的主题中，这些内部主题对用户不可见，然后通过一个自定义的服务拉取这些内部主题中的消息，并将满足条件的消息再投递到要发送的真实的主题中。  
 
 
-![](../.gitbook/assets/image%20%2865%29.png)
+![](../.gitbook/assets/image%20%2866%29.png)
 
 ###  
 
