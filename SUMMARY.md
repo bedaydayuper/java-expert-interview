@@ -57,6 +57,7 @@
 
 * [深入理解kafka](zhong-jian-jian-kafka/untitled.md)
 * [kafka-面试题一、消息队列](zhong-jian-jian-kafka/kafka-mian-shi-ti.md)
+* [【转】kafka-面试题二、kafka 知识](zhong-jian-jian-kafka/zhuan-kafka-mian-shi-ti-er-kafka-zhi-shi.md)
 
 ## 中间件-redis
 
