@@ -2,7 +2,7 @@
 description: '转自：http://svip.iocoder.cn/Kafka/Interview/'
 ---
 
-# kafka-面试题二、kafka 知识【转】
+# kafka-面试题二、kafka 知识【转+总结】
 
 ## 
 
@@ -78,6 +78,8 @@ Kafka 的主要特点？
 * 当新增和删除 Consumer 节点时，相同 Topic 的多个 Partition 会分配给剩余的 Consumer 们。
 
 另外，推荐阅读 [《为什么 Kafka 这么快？》](https://mp.weixin.qq.com/s/pzVS7r3QaQPFwob-fY8b4A) 文章，写的更加细致。
+
+《为什么kafka 这么快？》 文章总结：
 
 > 1、顺序IO ：Kafka使用了顺序IO（Sequential IO）， 并极力避免随机磁盘访问（Random Disk Access）。为什么不用内存存储？因为内存贵。 
 >
