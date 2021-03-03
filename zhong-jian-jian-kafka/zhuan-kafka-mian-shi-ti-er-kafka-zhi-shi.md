@@ -2,7 +2,7 @@
 description: '转自：http://svip.iocoder.cn/Kafka/Interview/'
 ---
 
-# 【转】kafka-面试题二、kafka 知识
+# kafka-面试题二、kafka 知识【转】
 
 ## 
 
@@ -31,7 +31,9 @@ Kafka 的主要特点？
 
 * 5、支持 online 和 offline 的场景。
 
-聊聊 Kafka 的设计要点？1）吞吐量高吞吐是 Kafka 需要实现的核心目标之一，为此 kafka 做了以下一些设计：
+聊聊 Kafka 的设计要点？
+
+1）`吞吐量高吞吐`是 Kafka 需要实现的核心目标之一，为此 kafka 做了以下一些设计：
 
 * 1、数据磁盘持久化：消息不在内存中 Cache ，直接写入到磁盘，充分利用磁盘的顺序读写性能。
 
@@ -56,7 +58,7 @@ Kafka 的主要特点？
   >
   > 发布者发到某个 Topic 的消息会被均匀的分布到多个 Partition 上（随机或根据用户指定的回调函数进行分布），Broker 收到发布消息往对应 Partition 的最后一个 segment 上添加该消息。当某个 segment上 的消息条数达到配置值或消息发布时间超过阈值时，segment上 的消息会被 flush 到磁盘，只有 flush 到磁盘上的消息订阅者才能订阅到，segment 达到一定的大小后将不会再往该 segment 写数据，Broker 会创建新的 segment 文件。
 
-2）负载均衡
+2）`负载均衡`
 
 * 1、Producer 根据用户指定的算法，将消息发送到指定的 Partition 中。
 * 2、Topic 存在多个 Partition ，每个 Partition 有自己的replica ，每个 replica 分布在不同的 Broker 节点上。多个Partition 需要选取出 Leader partition ，Leader Partition 负责读写，并由 Zookeeper 负责 fail over 。
@@ -76,6 +78,16 @@ Kafka 的主要特点？
 * 当新增和删除 Consumer 节点时，相同 Topic 的多个 Partition 会分配给剩余的 Consumer 们。
 
 另外，推荐阅读 [《为什么 Kafka 这么快？》](https://mp.weixin.qq.com/s/pzVS7r3QaQPFwob-fY8b4A) 文章，写的更加细致。
+
+> 1、顺序IO ：Kafka使用了顺序IO（Sequential IO）， 并极力避免随机磁盘访问（Random Disk Access）。为什么不用内存存储？因为内存贵。 
+>
+> 2、内存映射文件：内存映射文件将磁盘上的文件内容与内存映射起来，我们往内存里写入数据，操作系统会在稍后把数据冲刷到磁盘上。 所以，在写入数据时几乎就是写入内存的速度，这是Kafka快到飞起的另一个原因。 
+>
+> 3、零拷贝：这里的零拷贝并非指一次拷贝都没有，而是避免了在内核空间和用户空间之间的拷贝。 
+>
+> 4、应用层面的优化：除了利用底层的技术外，Kafka还在应用程序层面提供了一些手段来提升性能。最明显的就是使用批次。 在向Kafka写入数据时，可以启用批次写入，这样可以避免在网络上频繁传输单个消息带来的延迟和带宽开销。
+
+
 
 ### Kafka 的架构是怎么样的？
 
