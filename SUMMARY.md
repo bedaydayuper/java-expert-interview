@@ -61,7 +61,8 @@
 
 ## 中间件-redis
 
-* [Untitled](zhong-jian-jian-redis/untitled.md)
+* [Redis 深度历险-笔记](zhong-jian-jian-redis/untitled.md)
+* [Redis 一些想了解的话题](zhong-jian-jian-redis/redis-yi-xie-xiang-le-jie-de-hua-ti.md)
 
 ## 中间价-mysql
 
