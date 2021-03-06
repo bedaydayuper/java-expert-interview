@@ -72,7 +72,7 @@ ttl key
 type key
 ```
 
-![5&#x79CD;&#x5BF9;&#x5916;&#x5448;&#x73B0;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;](../.gitbook/assets/image%20%2878%29.png)
+![5&#x79CD;&#x5BF9;&#x5916;&#x5448;&#x73B0;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;](../.gitbook/assets/image%20%2879%29.png)
 
 7、查看key 的内部编码
 
@@ -163,7 +163,7 @@ decrby key number 按照数字自减
 value={{field1, value1}, ..., {fieldN, valueN}}
 ```
 
-![](../.gitbook/assets/image%20%2875%29.png)
+![](../.gitbook/assets/image%20%2876%29.png)
 
 2、基础操作
 
@@ -363,7 +363,7 @@ sinter key [key...]
 
 1、首先是集合，所以不能有重复的元素（但是分数可以重复），但不同的是有序集合是可以排序的。给每个元素设置一个分数作为排序的依据。提供了获取制定分数和元素范围查询、计算成员排名等功能。
 
-![](../.gitbook/assets/image%20%2876%29.png)
+![](../.gitbook/assets/image%20%2877%29.png)
 
   
 2、命令
