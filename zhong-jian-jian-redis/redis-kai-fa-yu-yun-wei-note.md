@@ -2,7 +2,7 @@
 description: 当当电子书
 ---
 
-# Redis开发与运维-note
+# Redis开发与运维-note（一 API操作）
 
 ## 1 初识Redis
 
@@ -72,7 +72,7 @@ ttl key
 type key
 ```
 
-![5&#x79CD;&#x5BF9;&#x5916;&#x5448;&#x73B0;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;](../.gitbook/assets/image%20%2875%29.png)
+![5&#x79CD;&#x5BF9;&#x5916;&#x5448;&#x73B0;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;](../.gitbook/assets/image%20%2876%29.png)
 
 7、查看key 的内部编码
 
@@ -319,19 +319,181 @@ brpop key timeout.  // timeout 单位为秒，客户端要等到timeout 秒后�
 
 ### 2.5 集合
 
-### 
+1、不允许有重复，并且无序，也不能通过下标获取元素。
+
+2、命令：
+
+```text
+// 添加
+sadd key element [element...]
+
+// 删除
+srem key elment [element...]
+
+// 计算个数
+scard key
+
+// 判断元素是否在集合中
+ sismember key element // 有，返回1； 没有返回0.
+ 
+// 从集合返回指定个数元素
+srandmember key [count] 
+
+// 从集合中随机弹出元素
+spop key
+
+ // 获取所有的元素
+smembers key
+
+// 集合间操作-交集
+sinter key [key...]
+
+ // 集合间操作-并集
+ sunion key [key ...]
+ // 集合间差集
+  sdiff key [key...]
+```
+
+3、内部编码
+
+* intset\(整数集合\)：当元素中的元素都是整数，而且元素个数小于set-max-intset-entries 配置时，使用。
+* hashtable\(哈希表\): 无法满足intset 时使用。
 
 ### 2.6 有序集合
 
-### 
+1、首先是集合，所以不能有重复的元素（但是分数可以重复），但不同的是有序集合是可以排序的。给每个元素设置一个分数作为排序的依据。提供了获取制定分数和元素范围查询、计算成员排名等功能。
+
+![](../.gitbook/assets/image%20%2875%29.png)
+
+  
+2、命令
+
+```text
+// 添加元素
+zadd key score member [score member ...]
+
+// 计算成员个数
+zcard key
+// 返回指定分数范围成员个数
+zcount key min max  
+min 和max 为开始分数和结束分数
+
+
+// 计算某个成员的分数
+zscore key member
+
+// 计算成员的排名
+zrank key member  // 从低到高排名
+zrevrank key member // 从高到低排名
+
+// 删除成员
+zrem key member [key member ...]
+
+// 增加成员的分数
+zincrby key increment member
+eg:
+zincrby userkey 9 zp // 给 userkey 中 member 为 zp 的元素 增加分数 9 。
+
+// 返回指定排名返回的成员
+zrange key start end [withscores]  // 从低到高 返回排名在start 和 end 之间的元素，带上withscore ,则返回值带有分数。
+zrevrange key start end [withscores] // 从高到低
+eg:
+zrange testkey 0 2 withscores 返回排名最低的三个成员
+
+// 返回指定分数范围的成员
+zrangebyscore key min max [withscores] [limit offset count]
+zrevrangebyscore key max min [withscores] [limit offset count]
+
+其中：
+key 为zset的key
+min 和max 为最小分数 和最大分数
+withscores 表示结果返回是否带score
+limit offset count ： 表示限制输出的起始位置和个数
+
+// 删除指定排名内的升序元素 (注意是排名)
+zremrangebyrank key start end 
+eg: 
+zremrangebyrank testkey 0 2 // 删除第start名 到第end 名的元素
+
+// 删除指定分数内的成员
+zremrangebyscore key min max // min 和max 为分数
+eg:
+zremrangebyscore testkey (250 +inf  // 删除250分以上的全部成员
+
+// 集合间的命令 [不常用，忽略]
+
+```
+
+3、内部编码  
+
+
+* ziplist\(压缩列表\): 当有序集合的元素个数小于zset-max-ziplist-entries ，且每个元素的值都小于zset-max-ziplist-value 配置时，使用。
+* skiplist:ziplist 不满足的情况。
 
 ### 2.7 键管理
 
-###  
+1、单个键管理
 
-## 3 小功能大用处
+```text
+// 键重命名
+rename key newkey
+renamenx key newkey // 只有newkey 不存在时才会被覆盖
+
+// 随机返回一个键
+randomkey
+
+// 键过期
+expire key seconds // 键在多少秒之后过期
+ttl key // 查看key 的过期时间还剩多少。 
+ttl 结果：
+大于0，是还剩多少秒； 
+-1 表示没有设置过期时间； 
+-2 表示键不存在。
+
+Redis不支持二级数据结构（比如哈希、列表）内部元素的过期。
+
+setex 作为set+expire 的组合，不但是原子操作，还减少了一次网络通讯的时间。
+
+// 迁移键
+(1)方案一：生产环境一般不允许
+move key db  // 把指定的键从源数据库移动到目标数据库中。
+（2）方案二：dump + restore: 
+dump key // 将键值序列化
+restore key ttl value // 在目标Redis上，复原。
+（3）方案三、migrate
 
 
 
-## 4 
+```
+
+2、遍历键  
+两种方案：keys 和scan
+
+\(1\) keys 全量遍历键
+
+```text
+keys pattern // pattern 为正则表达式
+```
+
+如果Redis 里面包含了大量键，执行keys 命令很可能会造成Redis阻塞，所以生产环境一般不用。
+
+（2）scan 渐进式遍历
+
+scan 采用渐进式遍历的方式来解决keys 命令可能带来的阻塞问题，每次scan 命令的时间复杂度为O\(1\), 但是要真正实现keys 的功能，需要执行多次scan 。
+
+```text
+scan cursor [match pattern] [count number]
+其中：
+cursor是必须参数，游标，第一次遍历从0开始，每次scan 遍历都会返回当前游标的值，直到游标值为0，表示遍历结束。
+match pattern: 可选，做模式的匹配
+count number: 可选参数：作用是表明每次要遍历的键的个数，默认是10，此参数可以适当调大。
+```
+
+除了scan 以外，Redis提供了面向哈希、集合、有序集合的扫描遍历命令，解决诸如hgetall, smembers, zrange 可能产生的阻塞问题，对应的命令分别是hscan, sscan, zscan。
+
+> 渐进式遍历可以解决keys 可能产生的阻塞问题，但是scan 并非完美，如果在scan 的过程中如果有键的变化（增加、删除、修改），那么遍历效果可能会碰到如下问题：新增的键可能没有遍历到，遍历出了重复的键等情况，也就是说scan 并不能保证完整的遍历出来所有的键。
+
+
+
+
 
