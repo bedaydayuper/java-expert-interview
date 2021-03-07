@@ -63,6 +63,7 @@
 
 * [Redis开发与运维-note（一 API操作）](zhong-jian-jian-redis/redis-kai-fa-yu-yun-wei-note.md)
 * [Redis开发与运维-note（二）](zhong-jian-jian-redis/redis-kai-fa-yu-yun-wei-note-er.md)
+* [Redis开发与运维-note\(三\)](zhong-jian-jian-redis/redis-kai-fa-yu-yun-wei-note-san.md)
 * [Redis 深度历险-笔记](zhong-jian-jian-redis/untitled.md)
 * [Redis 一些想了解的话题](zhong-jian-jian-redis/redis-yi-xie-xiang-le-jie-de-hua-ti.md)
 
