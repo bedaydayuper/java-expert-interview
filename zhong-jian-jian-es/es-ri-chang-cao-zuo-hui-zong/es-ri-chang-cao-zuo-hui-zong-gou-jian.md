@@ -515,7 +515,8 @@ curl -XPOST localhost:9200/_aliases -d '
     ]  
 }  
 '  
- 
+ // 相当于如下指令： 
+PUT /my_index_v1/_alias/my_index    // 设置笔名 my_index 指向 my_index_v1
 
  此时，你可以通过同义词my_index访问。包括创建索引，删除索引等。
 
@@ -542,11 +543,27 @@ curl -XPOST localhost:9200/_aliases -d '
         }}  
     ]  
 }  
-'  
+
+// 相当于如下指令： 
+POST /_aliases
+{
+    "actions": [
+        { "remove": { "index": "my_index_v1", "alias": "my_index" }},
+        { "add":    { "index": "my_index_v2", "alias": "my_index" }}
+    ]
+}
+
+//  查看这个别名指向哪一个索引
+GET /*/_alias/my_index
+
+
  step5，删除老的索引。
 
 Java代码  
 curl -XDELETE localhost:9200/my_index_v1  
+
+索引别名 操作wiki:
+https://www.elastic.co/guide/cn/elasticsearch/guide/current/index-aliases.html
 ```
 
 ### 1.6 跨集群迁移数据
