@@ -65,7 +65,9 @@ no ：不索引
 在查询时，会先去看字段有没有定义search_analyzer，如果没有定义，就去看有没有analyzer，再没有定义，才会去使用ES预设的
 
 3、type  （参考自： https://blog.csdn.net/ZYC88888/article/details/83059040）
-（1）text: 设置text类型以后，字段内容会被分析，在生成倒排索引以前，字符串会被分析器分成一个一个词项。text类型的字段不用于排序，很少用于聚合（termsAggregation除外）。
+（1）text: 设置text类型以后，字段内容会被分析，在生成倒排索引以前，
+字符串会被分析器分成一个一个词项。
+text类型的字段不用于排序，很少用于聚合（termsAggregation除外）。
 （2）keyword: 只能精确匹配到。
 （3）数字类型：在满足需求的情况下，尽可能选择范围小的数据类型
 （4）Object类型：
@@ -337,6 +339,39 @@ GET my_index/_search
 }
  
  一条结果也搜不到了。
+ 
+ 注意：由于嵌套对象 被索引在独立隐藏的文档中，我们无法直接查询它们。
+  相应地，我们必须使用 nested 查询 去获取它们：
+  GET my_index/_search
+{
+  "query": {
+    "nested": {
+      "path": "user",
+      "query": {
+        "bool": {
+          "must": [
+            { "match": { "user.first": "John" }},
+            { "match": { "user.last":  "Smith" }} 
+          ]
+        }
+      }
+    }
+  }
+}
+返回一条，但是如果使用如下查询，则查不到
+  GET my_index/_search
+{
+      "query": {
+        "bool": {
+          "must": [
+            { "match": { "user.first": "John" }},
+            { "match": { "user.last":  "Smith" }} 
+          ]
+        }
+      }
+ 
+}
+ 
 ```
 
 看一个包含上述知识点的最常见的mapping:
