@@ -146,15 +146,74 @@ Redis 中值对象除了整数之外，都是使用的字符串存储。
 * 主节点的写能力收到单机的限制
 * 主节点的存储能力收到单机的限制
 
-2、高可用
+2、Redis sentinel 的高可用
+
+当主节点出现故障时，Redis sentinel 能自动完成故障发现和故障转移，并通知应用方，从而实现真正的高可用。
+
+Redis sentinel 是一个分布式架构，其中包含若干个sentinel节点和Redis数据节点，每个sentinel 节点会对数据节点和其余sentinel 节点进行监控，当它发现节点不可达时，会对节点做下线标识。如果被标识的是主节点，它还会和其他sentinel节点进行协商，当大多数sentinel节点都认为主节点不可达时，它们会选举出一个sentinel节点来完成自动故障转移的工作，同时会将这个变化实时通知给Redis应用方。
 
 
 
-3、Redis sentinel 的高可用
+![](../.gitbook/assets/image%20%2892%29.png)
+
+Redis sentinel 的作用：
+
+* 监控
+* 通知
+* 主节点故障转移
+* 配置提供者：客户端初始化的时候连接的是sentinel 节点集合。
 
 
 
 ### 9.2 实现原理
+
+#### 9.2.1 三个定时监控任务
+
+（1）每个10秒，每个sentinel节点会向主节点和从节点发送info命令获取最新的拓扑结构
+
+![](../.gitbook/assets/image%20%2895%29.png)
+
+（2）每隔2秒，每个sentinel节点会向Redis数据节点的_sentinel_:hello 频道上发送该sentinel 节点对于主节点的判断以及当前sentinel节点的信息，同时每个sentinel节点也会订阅该频道，来了解其他sentinel节点以及它们对主节点的判断。这个定时任务可以完成以下两个工作：
+
+* 发现新的sentinel节点
+* sentinel节点之间交换主节点的状态
+
+![](../.gitbook/assets/image%20%2896%29.png)
+
+（3）每隔1秒，每个sentinel节点会向主节点、从节点、其余sentinel节点发送一条ping 命令，进行一次心跳检测，来确认当前节点是否可达。
+
+![](../.gitbook/assets/image%20%2893%29.png)
+
+#### 9.2.2 主观下线和客观下线
+
+主观下线：
+
+sentinel 节点向其他节点发送心跳检测，如果其他节点在规定时间内没有返回，则sentinel节点就会对没有返回的节点做失败判定，这个行为叫做主观下线。主观下线是当前sentinel节点的一家之言，有误判的可能。
+
+客观下线：
+
+当sentinel主观下线的节点是主节点时，该sentinel 节点会向其他sentinel节点询问对主节点的判断，如果超过quorum个数，sentinel节点认为主节点确实有问题，这是该sentinel节点会做出客观下线的决定。
+
+![](../.gitbook/assets/image%20%2894%29.png)
+
+
+
+#### 9.2.3 领导者sentinel 节点选举
+
+选出一个领导者sentinel节点，进行故障转移的工作。Redis采用raft算法实现领导者选举。
+
+#### 9.2.4 故障转移
+
+步骤：
+
+* 在从节点中选一个作为新的主节点
+* sentinel领导者节点会对第一步选出来的从节点执行slaveof no one 让其成为主节点
+* sentinel领导者 向其他剩余的从节点发送命令，让他们成为新主节点的从节点
+* sentinel节点集合会将原来的主节点更新为从节点，并保持对其关注，当其恢复后命令它去复制新的主节点。
+
+
+
+![](../.gitbook/assets/image%20%2891%29.png)
 
 ## 10 集群
 
