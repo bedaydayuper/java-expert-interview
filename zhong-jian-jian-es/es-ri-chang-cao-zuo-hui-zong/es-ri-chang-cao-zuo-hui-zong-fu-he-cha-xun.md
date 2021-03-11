@@ -352,7 +352,7 @@ POST student/_search
 ```
 
 没有must, 有must\_not, 有 should 会怎样呢？  
-&gt; 此时，should 也必须满足一个条件。
+答案： 此时，should 也必须满足一个条件。
 
 看如下的例子：
 
