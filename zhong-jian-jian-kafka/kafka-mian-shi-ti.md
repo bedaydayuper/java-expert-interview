@@ -88,7 +88,9 @@ broker： 消息代理，负责存储消息和转发消息。
 
 ```text
 1、Producer 发送消息到 Message Broker 阶段
-Producer 发消息给Message Broker 时，不要求 Message Broker 对接收到的消息响应确认，Producer 也不用关心 Message Broker 是否收到消息了。
+Producer 发消息给Message Broker 时，
+不要求 Message Broker 对接收到的消息响应确认，
+Producer 也不用关心 Message Broker 是否收到消息了。
 2、Message Broker 存储/转发阶段
 对 Message Broker 的存储不要求持久性。
 转发消息时，也不用关心 Consumer 是否真的收到了。
