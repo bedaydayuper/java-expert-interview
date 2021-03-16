@@ -243,7 +243,7 @@ set 指令的方案，适合用于在单机 Redis 节点的场景下，在多 Re
 
 流程图： [https://www.processon.com/view/link/5f4c871d079129356ec6f4d7](https://www.processon.com/view/link/5f4c871d079129356ec6f4d7)
 
-#### 9.2.3 
+文章：[https://mp.weixin.qq.com/s/JLEzNqQsx-Lec03eAsXFOQ](https://mp.weixin.qq.com/s/JLEzNqQsx-Lec03eAsXFOQ)
 
 
 
