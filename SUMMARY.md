@@ -62,7 +62,7 @@
 ## 中间件-redis
 
 * [Redis interview\(一\) 缓存](zhong-jian-jian-redis/redis-interview-yi-huan-cun.md)
-* [Redis interview\(二\) Redis](zhong-jian-jian-redis/redis-interview-er-redis.md)
+* [Redis interview\(二\) Redis  【转】](zhong-jian-jian-redis/redis-interview-er-redis.md)
 * [Redis开发与运维-note（一 API操作）](zhong-jian-jian-redis/redis-kai-fa-yu-yun-wei-note.md)
 * [Redis开发与运维-note（二）](zhong-jian-jian-redis/redis-kai-fa-yu-yun-wei-note-er.md)
 * [Redis开发与运维-note\(三\)](zhong-jian-jian-redis/redis-kai-fa-yu-yun-wei-note-san.md)
