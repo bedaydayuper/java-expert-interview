@@ -77,8 +77,6 @@ HTTP/1.1 100 continue
 
 然后，服务器继续读取输入流的内容。
 
-6、
-
 
 
 ## 
@@ -86,6 +84,28 @@ HTTP/1.1 100 continue
 ## 4 容器中的各个组件
 
 （第五~20章）
+
+### 4.1 Container 与管道
+
+1、Tomcat 中 有4种类型的容器，都继承自container 接口，4种容器如下：
+
+Engine: 表示整个container servlet 引擎。
+
+Host：表示包含一个或者多个context容器的虚拟主机
+
+Context：表示一个web 应用程序，一个context 包含多个wrapper。
+
+ Wrapper：表示一个独立的servlet 实现。
+
+2、 管道与阀：
+
+管道包含servlet 要调用的任务。一个阀表示一个具体的执行任务。管道中有一个基础阀，然后可以添加其他任意阀。
+
+当一个阀执行完成后，会调用下一个阀继续执行。基础阀总是最后一个执行的。多个阀就是责任链模式。
+
+3、wrapper： 要负责管理其基础的servlet 类的servlet 生命周期。
+
+
 
 ##   
 
