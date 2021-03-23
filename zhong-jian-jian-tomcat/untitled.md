@@ -117,5 +117,19 @@ Context：表示一个web 应用程序，一个context 包含多个wrapper。
 > * Context 容器  Context 代表 Servlet 的 Context，它具备了 Servlet 运行的基本环境，理论上只要有 Context 就能运行 Servlet 了。简单的 Tomcat 可以没有 Engine 和 Host。Context 最重要的功能就是管理它里面的 Servlet 实例，Servlet 实例在 Context 中是以 Wrapper 出现的，还有一点就是 Context 如何才能找到正确的 Servlet 来执行它呢？ Tomcat5 以前是通过一个 Mapper 类来管理的，Tomcat5 以后这个功能被移到了 request 中，在前面的时序图中就可以发现获取子容器都是通过 request 来分配的。
 > * Wrapper 容器  Wrapper 代表一个 Servlet，它负责管理一个 Servlet，包括的 Servlet 的装载、初始化、执行以及资源回收。Wrapper 是最底层的容器，它没有子容器了，所以调用它的 addChild 将会报错。  Wrapper 的实现类是 StandardWrapper，StandardWrapper 还实现了拥有一个 Servlet 初始化信息的 ServletConfig，由此看出 StandardWrapper 将直接和 Servlet 的各种信息打交道。
 
-##   
+### 4.2 生命周期
+
+catalina 在设计上允许一个组件包含其他组件，父组件可以启动/ 关闭它的子组件。Catalina 的这种设计使所有的组件都置于其父组件的监护之下，这样，Catalina 的启动类只需要启动一个组件就可以将全部应用的组件都启动起来。这种单一启动、关闭机制是通过lifecycle 接口实现的。
+
+### 4.3 类加载
+
+1、为什么servlet 需要自己实现一个类加载器？
+
+servlet 容器需要实现一个自定义的载入器，而不能使用简单的使用系统的类加载器， 因为servlet 不应该完全信任它正在运行的servlet 类。  使用系统类的类加载器加载某个servlet 类所使用的全部类，那么servlet 就能访问所有类，包括当前运行的Java虚拟机中环境变量classpath 指明的路径下的所有类和库。这是非常危险的。 servlet 只允许载入web-inf/classes 目录以及子目录下的类，和从部署的库到WEN-INF/lib 目录载入类。
+
+另一个原因是提供自动重载的功能，即当web-inf/classes 目录或 web-inf/lib 目录下的类发生变化时，web 应用程序会重新载入这些类。在Tomcat 类加载器的实现中，类加载器使用一个额外的线程来不断检查sevlet 类和其他类文件的时间戳。
+
+2、
+
+### 4.4 
 
