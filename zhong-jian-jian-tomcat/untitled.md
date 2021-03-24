@@ -134,7 +134,23 @@ servlet 容器需要实现一个自定义的载入器，而不能使用简单的
 * 安全
 * 复用
 
-1
+### 4.4 session 管理
 
-### 4.4 
+1、默认情况下，session 管理器会将其所管理的session对象存放在内存中。但是在Tomcat中，session管理器也可以将session 对象进行持久化。
+
+2、每当访问一个session实例时，会调用其access方法来修改session对象的最后访问时间。若某个session对象在某个时间长度内都没有被访问，会被设置为过期。
+
+
+
+### 4.5 wrapper 组件
+
+1、Tomcat 处理http请求的方法调用
+
+![](../.gitbook/assets/image%20%28126%29.png)
+
+* 连接器创建request 和 response 对象
+* 连接器调用standardContext 实例的invoke 方法
+* standardContext 实例的invoke方法 调用其  管道对象的invoke 方法。standarr
+
+### 4.6 
 
