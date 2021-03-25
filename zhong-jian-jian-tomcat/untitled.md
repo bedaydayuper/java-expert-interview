@@ -150,7 +150,41 @@ servlet 容器需要实现一个自定义的载入器，而不能使用简单的
 
 * 连接器创建request 和 response 对象
 * 连接器调用standardContext 实例的invoke 方法
-* standardContext 实例的invoke方法 调用其  管道对象的invoke 方法。standarr
+* standardContext 实例的invoke方法 调用其  管道对象的invoke 方法。standarContext 中的基础阀是StandardContextValve 类的实例，因此standardContext 的管道对象会调用StandardContextValve 实例的invoke 方法
+* StandardContextValve 实例的invoke方法获取相应的wrapper 实例的invoke方法。
+* standardWrapper 类是wrapper 接口的标准实现，standardWrapper 实例的invoke方法会调用其管道对象的invoke方法
+* standardWrapper 管道对象中的基础阀是standardWrapperValve 类的实例，因此会调用standardWrapperValve 的invoke方法。standardWrapperValve 的invoke 方法调用wrapper 实例的allocate 方法获取servlet 实例
+* allocate 方法调用load 方法加载相应的servlet 类，若已经加载，则无需重复加载。
+* load 方法会调用servlet 的init 方法
+* StandardWrapperValve 调用servlet 实例的service方法。
 
-### 4.6 
+
+
+### 4.6 关闭钩子
+
+  只有在优雅关闭时才能处理，如果使用kill -9 暴力退出，是没办法处理的。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
