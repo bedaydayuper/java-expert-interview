@@ -87,3 +87,5 @@ Endpoint的抽象实现AbstractEndpoint里面定义的Acceptor和AsyncTimeout两
 
 1、[https://blog.csdn.net/ThinkWon/article/details/104397665](https://blog.csdn.net/ThinkWon/article/details/104397665)
 
+2、[https://xie.infoq.cn/article/34904a222562319881838118d](https://xie.infoq.cn/article/34904a222562319881838118d)
+
