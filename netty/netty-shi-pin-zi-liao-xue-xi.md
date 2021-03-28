@@ -18,5 +18,21 @@
 
 
 
-## 2、
+## 2、Linux下五种i/o 模型
+
+BIO: 
+
+非阻塞：
+
+I/O 多路复用： （同步）select 跟 epoll
+
+![](../.gitbook/assets/image%20%28132%29.png)
+
+异步I/O : Windows下用。Linux下没用到。
+
+## 3 select poll epoll 
+
+实现一下
+
+## 4 
 
