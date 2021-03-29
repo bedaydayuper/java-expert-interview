@@ -34,5 +34,27 @@ I/O 多路复用： （同步）select 跟 epoll
 
 实现一下
 
-## 4 
+## 4 Nio \(no-blocking\)
+
+1、与BIO的区别
+
+（1）面向流（BIO）和面向缓存\(NIO\)
+
+（2）阻塞（BIO） 和 非阻塞（NIO）
+
+（3）select \(NIO 运行使用一个单独线程，监控多个网络连接\)
+
+
+
+2、重要概念
+
+selector
+
+channel
+
+selectionKey
+
+buffer
+
+3、
 
