@@ -269,7 +269,10 @@ onPartitionsAssigned: 在重新分配分区之后和消费者开始读取消费�
 
 1）Fetcher请求获取器获取请求并存储在unset中
 
-2）ConsumerNetworkClient网络客户端执行poll(),调用NetWlrikClient的send()方法从unset中获取ClientRequest请求转成RequestSend最终塞进Selector的KafkaChannel通道中，Seletcor.send()从kafka集群拉取待消费数据ConsumerRecords
+2）ConsumerNetworkClient网络客户端执行poll(),
+调用NetWlrikClient的send()方法从unset中获取ClientRequest请求转成RequestSend
+最终塞进Selector的KafkaChannel通道中，
+Seletcor.send()从kafka集群拉取待消费数据ConsumerRecords
 
 3. 消费者监听器MessageListener.onMessage()执行用户自定义的实际消费业务逻辑。
 ```
@@ -278,8 +281,14 @@ onPartitionsAssigned: 在重新分配分区之后和消费者开始读取消费�
 
 
 ```text
-1.Metadata：封装了元数据的一些逻辑的类。元数据仅保留一个主题的子集，随着时间的推移可以添加。当我们请求一个主题的元数据时，我们没有任何元数据会触发元数据更新。如果对元数据启用了主题过期，那么在更新之后，在过期时间间隔内未使用的任何主题都将从元数据刷新集中删除。
-2.ConsumerNetworkClient：高等级消费者访问网络层，为请求Future任务提供基本支持。这个类是线程安全的，但是不提供响应回调的同步。这保证在调用它们时不会持有锁。
+1.Metadata：封装了元数据的一些逻辑的类。
+元数据仅保留一个主题的子集，随着时间的推移可以添加。
+当我们请求一个主题的元数据时，我们没有任何元数据会触发元数据更新。
+如果对元数据启用了主题过期，那么在更新之后，
+在过期时间间隔内未使用的任何主题都将从元数据刷新集中删除。
+2.ConsumerNetworkClient：
+高等级消费者访问网络层，为请求Future任务提供基本支持。
+这个类是线程安全的，但是不提供响应回调的同步。这保证在调用它们时不会持有锁。
 3.SubscriptionState：订阅的TopicPartition的offset状态维护
 4.ConsumerCoordinator：消费者的协调者，负责partitiion的分配，reblance
 5.Fetcher：从brokers上按照配置获取消息。
