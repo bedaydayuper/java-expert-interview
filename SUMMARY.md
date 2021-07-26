@@ -69,7 +69,13 @@
 
 ## 中间价-mysql
 
-* [Untitled](zhong-jian-jia-mysql/untitled.md)
+* [Mysql 基础](zhong-jian-jia-mysql/untitled.md)
+* [MySQL基础-字符集与比较规则](zhong-jian-jia-mysql/mysql-ji-chu-zi-fu-ji-yu-bi-jiao-gui-ze.md)
+* [MySQL基础-记录结构](zhong-jian-jia-mysql/mysql-ji-chu-ji-lu-jie-gou.md)
+* [MySQL查询与连接](zhong-jian-jia-mysql/mysql-cha-xun-yu-lian-jie.md)
+* [MySQL查询优化](zhong-jian-jia-mysql/mysql-cha-xun-you-hua.md)
+* [MySQL事务](zhong-jian-jia-mysql/mysql-shi-wu.md)
+* [MySQL锁](zhong-jian-jia-mysql/mysql-suo.md)
 
 ## 中间件-分库分表
 
