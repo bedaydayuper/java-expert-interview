@@ -76,6 +76,9 @@
 * [MySQL查询优化](zhong-jian-jia-mysql/mysql-cha-xun-you-hua.md)
 * [MySQL事务](zhong-jian-jia-mysql/mysql-shi-wu.md)
 * [MySQL锁](zhong-jian-jia-mysql/mysql-suo.md)
+* [MySQL主从同步](zhong-jian-jia-mysql/mysql-zhu-cong-tong-bu.md)
+* [MySQL分库分表](zhong-jian-jia-mysql/mysql-fen-ku-fen-biao/README.md)
+  * [Untitled](zhong-jian-jia-mysql/mysql-fen-ku-fen-biao/untitled.md)
 
 ## 中间件-分库分表
 
