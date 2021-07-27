@@ -81,5 +81,5 @@ Windows使用的是gbk
 
 ![](../.gitbook/assets/image%20%28134%29.png)
 
-## 6 
+## 6 比较规则的应用
 
