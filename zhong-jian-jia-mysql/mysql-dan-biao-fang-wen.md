@@ -30,7 +30,7 @@ MySQL 执行查询语句的方式 成为 访问方法。
 
 1、把这种通过主键或者唯一二级索引列来定位一条记录的访问方法定义为：`const`，意思是常数级别的，代价是可以忽略不计的。不过这种`const`访问方法只能在`主键列`或者\``唯一二级索引列和一个常数进行等值比较时`才有效。  注意是唯一二级索引`，`uniq。跟ref的区别就是只返回了一条数据。
 
-![](../.gitbook/assets/image%20%28166%29.png)
+![](../.gitbook/assets/image%20%28169%29.png)
 
 
 
@@ -54,7 +54,7 @@ SELECT * FROM single_table WHERE key2 IS NULL;
 
 1、把这种搜索条件为二级索引列与常数等值比较，采用二级索引来执行查询的访问方法称为：`ref`
 
-![](../.gitbook/assets/image%20%28167%29.png)
+![](../.gitbook/assets/image%20%28170%29.png)
 
 对于普通的二级索引来说，通过索引列进行等值比较后可能匹配到**多条**连续的记录，而不是像主键或者唯一二级索引那样最多只能匹配**1条**记录，所以这种`ref`访问方法比`const`差了那么一丢丢，但是在二级索引等值比较时匹配的记录数较少时的效率还是很高的。
 
@@ -92,7 +92,7 @@ SELECT * FROM single_table WHERE key1 = 'abc' OR key1 IS NULL;
 
 当使用二级索引而不是全表扫描的方式执行该查询时，这种类型的查询使用的访问方法就称为`ref_or_null.` 
 
-![](../.gitbook/assets/image%20%28165%29.png)
+![](../.gitbook/assets/image%20%28168%29.png)
 
 
 
@@ -106,7 +106,7 @@ SELECT * FROM single_table WHERE key2 IN (1438, 6328) OR (key2 >= 38 AND key2 <=
 
 像 in 是单点区间， 大于小于时连续区间。
 
-![](../.gitbook/assets/image%20%28164%29.png)
+![](../.gitbook/assets/image%20%28166%29.png)
 
 ### 1.5  index
 
