@@ -194,7 +194,7 @@ optimizer_search_depth系统变量，如果连接表的个数小于该值，
 
 存储了表的统计信息，一条记录对应一个表的统计数据。
 
-![](../.gitbook/assets/image%20%28171%29.png)
+![](../.gitbook/assets/image%20%28172%29.png)
 
 1、n\_rows 统计项的收集
 
@@ -204,7 +204,7 @@ optimizer_search_depth系统变量，如果连接表的个数小于该值，
 
 存储了关于索引的统计数据，每一条记录对应一个索引的一个统计项的统计数据。
 
-![](../.gitbook/assets/image%20%28172%29.png)
+![](../.gitbook/assets/image%20%28173%29.png)
 
 针对`index_name`列相同的记录，`stat_name`表示针对该索引的统计项名称，`stat_value`展示的是该索引在该统计项上的值，`stat_description`指的是来描述该统计项的含义的。
 
