@@ -1,4 +1,4 @@
-# MySQL 查询优化（二）工具
+# MySQL 查询优化（四）optimizer trace
 
 ## 1 Explain
 
