@@ -201,13 +201,91 @@ possible\_keys列中的值并不是越多越好，可能使用的索引越多，
 
 ### 2.11 Extra
 
+#### 2.11.1 `No tables used` 
+
+当查询语句的没有`FROM`子句时将会提示该额外信息
+
+#### 2.11.2 `Impossible WHERE` 查询语句的`WHERE`子句永远为`FALSE`时将会提示该额外信息
+
+
+
+#### 2.11.3 `No matching min/max row` 
+
+当查询列表处有`MIN`或者`MAX`聚集函数，但是并没有符合`WHERE`子句中的搜索条件的记录时，将会提示该额外信息
+
+#### 2.11.4 `Using index` 
+
+当我们的查询列表以及搜索条件中只包含属于某个索引的列，也就是在可以使用索引覆盖的情况下，在`Extra`列将会提示该额外信息
+
+#### 2.11.5 `Using index condition` 
+
+有些搜索条件中虽然出现了索引列，但却不能使用到索引
+
+#### 2.11.6 `Using where` 
+
+当我们使用全表扫描来执行对某个表的查询，并且该语句的`WHERE`子句中有针对该表的搜索条件时，在`Extra`列中会提示上述额外信息
+
+#### 2.11.7 Using join buffer \(Block Nested Loop\)
+
+在连接查询执行过程中，当被驱动表不能有效的利用索引加快访问速度，`MySQL`一般会为其分配一块名叫`join buffer`的内存块来加快查询速度
+
+
+
+#### 2.11.8 `Not exists` 
+
+当我们使用左（外）连接时，如果`WHERE`子句中包含要求被驱动表的某个列等于`NULL`值的搜索条件，而且那个列又是不允许存储`NULL`值的，那么在该表的执行计划的`Extra`列就会提示`Not exists`额外信息
+
+
+
+#### 2.11.9 Using filesort
+
+有一些情况下对结果集中的记录进行排序是可以使用到索引的。
+
+#### 2.11.10 Using temporary
+
+在许多查询的执行过程中，`MySQL`可能会借助临时表来完成一些功能，比如去重、排序之类的，比如我们在执行许多包含`DISTINCT`、`GROUP BY`、`UNION`等子句的查询过程中，如果不能有效利用索引来完成查询，`MySQL`很有可能寻求通过建立内部的临时表来执行查询。
+
 
 
 ### 2.12 Json格式的执行计划
 
+在`EXPLAIN`单词和真正的查询语句中间加上`FORMAT=JSON 可以查看执行成本：`
+
+```text
+"cost_info": {
+    "read_cost": "1840.84",
+    "eval_cost": "193.76",
+    "prefix_cost": "2034.60",
+    "data_read_per_join": "1M"
+}
+```
+
+#### 2.12.1 read\_cost
+
+包含如下两个部分：
+
+* `IO`成本
+* 检测`rows × (1 - filter)`条记录的`CPU`成本
+
+#### 2.12.2 eval\_cost
+
+* 检测 `rows × filter`条记录的成本。
 
 
-### 2.13 Extented EXPLAIN
+
+#### 2.12.3 prefix\_cost
+
+单独查询 s1表的成本。
+
+```text
+等于 read_cost + eval_cost
+```
+
+
+
+#### 2.12.4 data\_read\_per\_join 
+
+表示在此次查询中需要读取的数据量。
 
 
 
