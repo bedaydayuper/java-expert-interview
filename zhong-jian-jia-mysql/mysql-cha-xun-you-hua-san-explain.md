@@ -199,7 +199,15 @@ possible\_keys列中的值并不是越多越好，可能使用的索引越多，
 
 
 
+### 2.11 Extra
 
 
-## 3 
+
+### 2.12 Json格式的执行计划
+
+
+
+### 2.13 Extented EXPLAIN
+
+
 
