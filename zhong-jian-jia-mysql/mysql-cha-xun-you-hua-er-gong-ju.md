@@ -1,12 +1,8 @@
 # MySQL 查询优化（四）optimizer trace
 
-## 1 Explain
+1、比explain 跟详细。
+
+2、可以查看具体的优化过程。
 
 
-
-## 2 optimizer trace
-
-
-
-## 3 InnoDB 的Buffer Pool
 
