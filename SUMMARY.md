@@ -79,7 +79,7 @@
 * [MySQL查询优化（三）explain](zhong-jian-jia-mysql/mysql-cha-xun-you-hua-san-explain.md)
 * [MySQL 查询优化（四）optimizer trace](zhong-jian-jia-mysql/mysql-cha-xun-you-hua-er-gong-ju.md)
 * [MySQL查询优化（五）Buffer Pool](zhong-jian-jia-mysql/mysql-cha-xun-you-hua-wu-buffer-pool.md)
-* [MySQL事务](zhong-jian-jia-mysql/mysql-shi-wu.md)
+* [MySQL事务简介](zhong-jian-jia-mysql/mysql-shi-wu.md)
 * [MySQL锁](zhong-jian-jia-mysql/mysql-suo.md)
 * [MySQL主从同步](zhong-jian-jia-mysql/mysql-zhu-cong-tong-bu.md)
 * [MySQL分库分表](zhong-jian-jia-mysql/mysql-fen-ku-fen-biao/README.md)
